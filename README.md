@@ -1,3 +1,6 @@
+<h1>Please Follow this patterns</h1>
+
+
 Commits patterns: Conventional commits[feat:,fix:,build:, chore:, ci:, docs:, style:, refactor:, perf:, test:]
 </br>
 package manager: NPM
