@@ -37,3 +37,15 @@ Para exportações, seguimos o padrão de exportar em variáveis. Por exemplo:
 ```javascript
 export const constName = ...
 ```
+## Padronização de Nomes
+
+Para os nomes dos arquivos, usamos camelCase seguido pelo tipo do arquivo. Por exemplo:
+
+```text
+exampleArquivo.middlewares.ts
+```
+Para as pastas, todas devem estar em letras minúsculas.
+
+Este README fornece uma visão geral dos principais padrões de codificação que seguimos. Por favor, consulte a documentação de cada tópico para obter detalhes mais específicos.
+
+Isso deve ajudar a manter a consistência no projeto.
