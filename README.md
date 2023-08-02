@@ -4,7 +4,7 @@ Este projeto segue um conjunto de padrões e convenções para tornar o desenvol
 
 ## Rodar Projeto
 
-- `npm`: para utilizar .
+## - `npm`: para utilizar .
 
 
 ## Convenções de Commits
@@ -54,3 +54,5 @@ Para as pastas, todas devem estar em letras minúsculas.
 Este README fornece uma visão geral dos principais padrões de codificação que seguimos. Por favor, consulte a documentação de cada tópico para obter detalhes mais específicos.
 
 Isso deve ajudar a manter a consistência no projeto.
+
+
