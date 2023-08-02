@@ -2,6 +2,11 @@
 
 Este projeto segue um conjunto de padrões e convenções para tornar o desenvolvimento mais eficiente e o código mais legível. Aqui estão algumas das principais práticas que seguimos:
 
+## Rodar Projeto
+
+- `npm`: para utilizar .
+
+
 ## Convenções de Commits
 
 Utilizamos o padrão "Conventional Commits". Quando você faz um commit, por favor, siga os seguintes padrões:
