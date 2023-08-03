@@ -3,6 +3,11 @@ import {Users} from './users.entities';
 import { ImageGallery } from './imageGallery.entities';
 import {Comments} from './comments.entities';
 
+enum FuelType{
+    GASOLINA = 'gasolina',
+    ETANOL = 'etanol'
+}
+
 @Entity()
 export class Adverts{
     @PrimaryGeneratedColumn()
@@ -20,7 +25,7 @@ export class Adverts{
 
     
     @Column({type:'text', nullable:false})
-    fuel:string;
+    fuel:FuelType;
 
     
     @Column({type:'int', nullable:false})
