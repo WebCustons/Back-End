@@ -4,7 +4,7 @@ import { Adverts } from "../../entities/adverts.entities";
 export const updateAdvertService = async (
   advertId: number,
   advertData: any
-) => {
+): Promise<Adverts> => {
   const advertRepository = AppDataSource.getRepository(Adverts);
 
   const advert = await advertRepository.findOne({
