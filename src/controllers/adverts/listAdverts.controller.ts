@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
+import { listAdvertService } from "../../services/adverts/listAdverts.service";
 
-export const listAdvertsController = (req: Request, res: Response) => {
-  return res.json("Rota GET adverts criada");
+export const listAdvertsController = async (req: Request, res: Response) => {
+  const adverts = await listAdvertService();
+  return res.json(adverts);
 };

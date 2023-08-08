@@ -1,4 +1,4 @@
-import { z } from "zod"
+import { z } from "zod";
 
 export const advertSchema = z.object({
   id: z.string(),
@@ -15,8 +15,8 @@ export const advertSchema = z.object({
   cover_image: z.string(),
   published: z.boolean(),
   user_id: z.number(),
-})
+});
 
-export const advertSchemaRequest = advertSchema.omit({ id: true })
+export const advertSchemaRequest = advertSchema.omit({ id: true });
 
-export const advertSchemaRequestUpdate = advertSchemaRequest.partial()
+export const advertSchemaRequestUpdate = advertSchemaRequest.partial();

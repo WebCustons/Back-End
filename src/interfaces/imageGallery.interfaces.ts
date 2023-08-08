@@ -4,6 +4,6 @@ import {
   imageGallerySchemaRequest,
 } from "../schemas/imageGallery.schema"
 
-export type IImageGallery = z.infer<typeof imageGallerySchema>
+export type TImageGallery = z.infer<typeof imageGallerySchema>
 
-export type IImageGalleryRequest = z.infer<typeof imageGallerySchemaRequest>
+export type TImageGalleryRequest = z.infer<typeof imageGallerySchemaRequest>

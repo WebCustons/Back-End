@@ -6,10 +6,10 @@ import {
   userSchemaResponse,
 } from "../schemas/user.schema"
 
-export type IUser = z.infer<typeof userSchema>
+export type TUser = z.infer<typeof userSchema>
 
-export type IUserRequest = z.infer<typeof userSchemaRequest>
+export type TUserRequest = z.infer<typeof userSchemaRequest>
 
-export type IUserResponse = z.infer<typeof userSchemaResponse>
+export type TUserResponse = z.infer<typeof userSchemaResponse>
 
-export type IUserResponseUpdate = z.infer<typeof userSchemaRequestUpdate>
+export type TUserResponseUpdate = z.infer<typeof userSchemaRequestUpdate>
