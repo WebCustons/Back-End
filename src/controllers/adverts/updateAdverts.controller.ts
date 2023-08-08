@@ -1,15 +1,19 @@
 import { Request, Response } from "express";
 import { updateAdvertService } from "../../services/adverts/updateAdvert.service";
-import { Adverts } from "../../entities/adverts.entities";
-import { TAdvert } from "../../interfaces/advert.interfaces";
+import {
+  TAdvertRequestUpdate,
+  TAdvertResponse,
+} from "../../interfaces/advert.interfaces";
 
 export const updateAdvertsController = async (
   req: Request,
   res: Response
-): Promise<Response<TAdvert>> => {
-  const updateAdverts: TAdvert = await updateAdvertService(
-    req.body,
-    Number(req.params.id)
+): Promise<Response<TAdvertResponse>> => {
+  const advert: TAdvertRequestUpdate = req.body;
+
+  const updateAdverts: TAdvertResponse = await updateAdvertService(
+    Number(req.params.id),
+    advert
   );
 
   return res.json(updateAdverts);
