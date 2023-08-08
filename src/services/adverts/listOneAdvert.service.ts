@@ -1,9 +1,11 @@
 import { AppDataSource } from "../../data-source";
 import { Adverts } from "../../entities/adverts.entities";
+import { TAdvert } from "../../interfaces/advert.interfaces";
+import { advertSchema } from "./../../schemas/advert.schema";
 
 export const listOneAdvertService = async (
   advertId: number
-): Promise<Adverts> => {
+): Promise<TAdvert> => {
   const advertRepository = AppDataSource.getRepository(Adverts);
 
   const advert = await advertRepository.findOne({
@@ -14,5 +16,5 @@ export const listOneAdvertService = async (
     throw new Error("Advert not found");
   }
 
-  return advert;
+  return advertSchema.parse(advert);
 };
