@@ -17,53 +17,58 @@ enum FuelType {
 @Entity()
 export class Adverts {
   @PrimaryGeneratedColumn()
-  id: number;
+
+  id: number
 
   @Column({ type: "text", nullable: false })
-  brand: string;
+  brand: string
 
   @Column({ type: "text", nullable: false })
-  model: string;
+  model: string
 
   @Column({ type: "int", nullable: false })
-  year: number;
+  year: number
 
   @Column({ type: "text", nullable: false })
-  fuel: FuelType;
+  fuel: FuelType
 
   @Column({ type: "int", nullable: false })
-  mileage: number;
+  mileage: number
 
   @Column({ type: "text", nullable: false })
-  color: string;
-
-  @Column({ type: "int", nullable: false })
-  table_fipe: number;
-
-  @Column({ type: "int", nullable: false })
-  price: number;
-
-  @Column({ type: "text", nullable: false })
-  description: string;
-
-  @Column({ type: "text", nullable: false })
-  cover_image: string;
+  color: string
 
   @Column({ type: "boolean", nullable: false })
-  published: boolean;
+  table_fipe: boolean
+
+  @Column({ type: "int", nullable: false })
+  price: number
+
+  @Column({ type: "text", nullable: false })
+  description: string
+
+  @Column({ type: "text", nullable: false })
+  cover_image: string
+
+  @Column({ type: "boolean", nullable: false })
+  published: boolean
 
   @ManyToOne(() => Users, (user) => user.adverts_)
-  user_: Users;
+  user_: Users
 
   @OneToMany(() => ImageGallery, (gallery) => gallery.advert_, {
     cascade: true,
     onDelete: "CASCADE",
   })
-  images: ImageGallery[];
+
+  images: ImageGallery[]
+
 
   @OneToMany(() => Comments, (comment) => comment.advert_, {
     cascade: true,
     onDelete: "CASCADE",
   })
-  comments_: Comments[];
+
+  comments_: Comments[]
+
 }
