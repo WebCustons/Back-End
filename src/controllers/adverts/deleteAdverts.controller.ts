@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
+import { deleteAdvertService } from "../../services/adverts/deleteAdvert.service";
 
-export const deleteAdvertsController = (req: Request, res: Response) => {
-  return res.json("Rota DELETE adverts criada");
+export const deleteAdvertsController = async (req: Request, res: Response) => {
+  await deleteAdvertService(Number(req.params.id));
+  return res.status(204).send();
 };
