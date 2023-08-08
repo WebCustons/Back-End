@@ -4,10 +4,10 @@ import {
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
-} from "typeorm"
-import { Users } from "./users.entities"
-import { ImageGallery } from "./imageGallery.entities"
-import { Comments } from "./comments.entities"
+} from "typeorm";
+import { Users } from "./users.entities";
+import { ImageGallery } from "./imageGallery.entities";
+import { Comments } from "./comments.entities";
 
 enum FuelType {
   GASOLINA = "gasolina",
@@ -17,6 +17,7 @@ enum FuelType {
 @Entity()
 export class Adverts {
   @PrimaryGeneratedColumn()
+
   id: number
 
   @Column({ type: "text", nullable: false })
@@ -59,11 +60,15 @@ export class Adverts {
     cascade: true,
     onDelete: "CASCADE",
   })
+
   images: ImageGallery[]
+
 
   @OneToMany(() => Comments, (comment) => comment.advert_, {
     cascade: true,
     onDelete: "CASCADE",
   })
+
   comments_: Comments[]
+
 }
