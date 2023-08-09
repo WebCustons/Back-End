@@ -4,7 +4,7 @@ import {Address} from './address.entities';
 import {Adverts} from './adverts.entities';
 import {Comments} from './comments.entities';
 
-enum UserType{
+export enum UserType{
     CUSTOMER = 'customer',
     SELLER = 'seller',
     ADMIN = 'admin'
@@ -22,7 +22,7 @@ export class Users{
     @Column({type:'text',  nullable:false, unique:true})
     email:string;
 
-    @Column({type:'varchar', length:11,  nullable:false, unique:true})
+    @Column({type:'varchar', length:14,  nullable:false, unique:true})
     cpf:string;
 
     @Column({type:'int', nullable:false})
