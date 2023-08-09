@@ -10,6 +10,6 @@ export class ImageGallery{
     image:string
 
     @ManyToOne(()=>Adverts, adverts=>adverts.images)
-    advert_:Adverts
+    advert:Adverts
 
 }

@@ -44,11 +44,11 @@ export class Users{
     @JoinColumn()
     address:Address
 
-    @OneToMany(()=>Adverts, adverts=>adverts.user_, {cascade:true, onDelete:'CASCADE'})
+    @OneToMany(()=>Adverts, adverts=>adverts.user, {cascade:true, onDelete:'CASCADE'})
     adverts:Adverts[]
 
-    @OneToMany(()=>Comments, comment=>comment.user_, {cascade:true, onDelete:'CASCADE'})
-    comments_:Comments[]
+    @OneToMany(()=>Comments, comment=>comment.user, {cascade:true, onDelete:'CASCADE'})
+    comments:Comments[]
 
     @BeforeInsert()
     cryptoPassword(){

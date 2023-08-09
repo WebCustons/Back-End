@@ -53,17 +53,17 @@ export class Adverts {
   published: boolean;
 
   @ManyToOne(() => Users, (user) => user.adverts)
-  user_: Users;
+  user: Users;
 
-  @OneToMany(() => ImageGallery, (gallery) => gallery.advert_, {
+  @OneToMany(() => ImageGallery, (gallery) => gallery.advert, {
     cascade: true,
     onDelete: "CASCADE",
   })
   images: ImageGallery[];
 
-  @OneToMany(() => Comments, (comment) => comment.advert_, {
+  @OneToMany(() => Comments, (comment) => comment.advert, {
     cascade: true,
     onDelete: "CASCADE",
   })
-  comments_: Comments[];
+  comments: Comments[];
 }

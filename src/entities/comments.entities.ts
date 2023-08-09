@@ -19,9 +19,9 @@ export class Comments {
   @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
   created_at: Date;
 
-  @ManyToOne(() => Users, (users) => users.comments_)
-  user_: Users;
+  @ManyToOne(() => Users, (users) => users.comments)
+  user: Users;
 
-  @ManyToOne(() => Adverts, (adverts) => adverts.comments_)
-  advert_: Adverts;
+  @ManyToOne(() => Adverts, (adverts) => adverts.comments)
+  advert: Adverts;
 }
