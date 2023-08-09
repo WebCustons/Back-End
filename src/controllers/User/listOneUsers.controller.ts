@@ -7,7 +7,7 @@ export const listOneUsersController = async (
   res: Response
 ): Promise<TUserResponse> => {
   
-  const UserUser: TUserResponse = await listOneUserService(Number(req.params.id));
+  const UserUser: TUserResponse = await listOneUserService(Number(res.locals.userId));
 
   return UserUser;
 };

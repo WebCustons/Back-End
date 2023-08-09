@@ -7,7 +7,7 @@ export const deleteUserController = async (
   res: Response
 ): Promise<Response<void>> => {
   
-    await deleteUserService(Number(req.params.id));
+  await deleteUserService(Number(res.locals.userId));
 
   return res.status(204).send();
 };
