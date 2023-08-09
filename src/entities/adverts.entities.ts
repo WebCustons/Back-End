@@ -9,7 +9,7 @@ import { Users } from "./users.entities";
 import { ImageGallery } from "./imageGallery.entities";
 import { Comments } from "./comments.entities";
 
-enum FuelType {
+export enum FuelType {
   GASOLINA = "gasolina",
   ETANOL = "etanol",
 }
@@ -17,58 +17,53 @@ enum FuelType {
 @Entity()
 export class Adverts {
   @PrimaryGeneratedColumn()
-
-  id: number
-
-  @Column({ type: "text", nullable: false })
-  brand: string
+  id: number;
 
   @Column({ type: "text", nullable: false })
-  model: string
+  brand: string;
+
+  @Column({ type: "text", nullable: false })
+  model: string;
 
   @Column({ type: "int", nullable: false })
-  year: number
+  year: number;
 
   @Column({ type: "text", nullable: false })
-  fuel: FuelType
+  fuel: FuelType;
 
   @Column({ type: "int", nullable: false })
-  mileage: number
+  mileage: number;
 
   @Column({ type: "text", nullable: false })
-  color: string
+  color: string;
 
   @Column({ type: "boolean", nullable: false })
-  table_fipe: boolean
+  table_fipe: boolean;
 
   @Column({ type: "int", nullable: false })
-  price: number
+  price: number;
 
   @Column({ type: "text", nullable: false })
-  description: string
+  description: string;
 
   @Column({ type: "text", nullable: false })
-  cover_image: string
+  cover_image: string;
 
   @Column({ type: "boolean", nullable: false })
-  published: boolean
+  published: boolean;
 
   @ManyToOne(() => Users, (user) => user.adverts_)
-  user_: Users
+  user_: Users;
 
   @OneToMany(() => ImageGallery, (gallery) => gallery.advert_, {
     cascade: true,
     onDelete: "CASCADE",
   })
-
-  images: ImageGallery[]
-
+  images: ImageGallery[];
 
   @OneToMany(() => Comments, (comment) => comment.advert_, {
     cascade: true,
     onDelete: "CASCADE",
   })
-
-  comments_: Comments[]
-
+  comments_: Comments[];
 }

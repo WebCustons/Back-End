@@ -1,7 +1,14 @@
 import { Request, Response } from "express";
 import { listOneAdvertService } from "../../services/adverts/listOneAdvert.service";
+import { TAdvertResponse } from "../../interfaces/advert.interfaces";
 
-export const listOneAdvertsController = async (req: Request, res: Response) => {
-  const advertUser = await listOneAdvertService(Number(req.params.id));
+export const listOneAdvertsController = async (
+  req: Request,
+  res: Response
+): Promise<TAdvertResponse> => {
+  const advertUser: TAdvertResponse = await listOneAdvertService(
+    Number(req.params.id)
+  );
+
   return advertUser;
 };

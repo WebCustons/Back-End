@@ -1,8 +1,16 @@
 import { AppDataSource } from "../../data-source";
 import { Users } from "../../entities/users.entities";
 import { Adverts } from "../../entities/adverts.entities";
+import {
+  TAdvertRequest,
+  TAdvertResponse,
+} from "../../interfaces/advert.interfaces";
+import { advertSchema } from "./../../schemas/advert.schema";
 
-export const createAdvertService = async (advertData: any, userId: number) => {
+export const createAdvertService = async (
+  advertData: TAdvertRequest,
+  userId: number
+): Promise<TAdvertResponse> => {
   const userRepository = AppDataSource.getRepository(Users);
   const user = await userRepository.findOne({
     where: { id: userId },
@@ -20,5 +28,5 @@ export const createAdvertService = async (advertData: any, userId: number) => {
 
   const createdAdvert = await advertRepository.save(newAdvert);
 
-  return createdAdvert;
+  return advertSchema.parse(createdAdvert);
 };
