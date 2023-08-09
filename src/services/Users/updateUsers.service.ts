@@ -1,7 +1,7 @@
 import { AppDataSource } from "../../data-source";
 import { Users } from "../../entities/users.entities";
 import { TUserResponse, TUserRequestUpdate } from "../../interfaces/user.interfaces";
-import { userSchemaResponse } from './../../schemas/user.schema';
+import { userSchemaResponse } from '../../schemas/user.schema';
 
 export const updateUserService = async (
   userId: number,

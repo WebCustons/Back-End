@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { TUserRequest, TUserResponse } from "../../interfaces/user.interfaces";
-import { updateUserService } from "../../services/Users/updateUsers.service";
+import { updateUserService } from "../../services/users/updateUsers.service";
 
 export const updateUserController = async (
     req: Request,
