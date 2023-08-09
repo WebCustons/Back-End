@@ -10,7 +10,7 @@ export const createAdvertsController = async (
   res: Response
 ): Promise<Response<TAdvertResponse>> => {
   const advert: TAdvertRequest = req.body;
-  const userId = req.params.id;
+  const userId = 1;
 
   const newAdvert: TAdvertResponse = await createAdvertService(
     advert,

@@ -20,6 +20,6 @@ export const advertSchema = z.object({
 
 export const allAdvertSchema = advertSchema.array();
 
-export const advertSchemaRequest = advertSchema.omit({ id: true });
+export const advertSchemaRequest = advertSchema.omit({ id: true,user_id:true });
 
 export const advertSchemaRequestUpdate = advertSchemaRequest.partial();

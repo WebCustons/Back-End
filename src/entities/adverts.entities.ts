@@ -52,7 +52,7 @@ export class Adverts {
   @Column({ type: "boolean", nullable: false })
   published: boolean;
 
-  @ManyToOne(() => Users, (user) => user.adverts_)
+  @ManyToOne(() => Users, (user) => user.adverts)
   user_: Users;
 
   @OneToMany(() => ImageGallery, (gallery) => gallery.advert_, {

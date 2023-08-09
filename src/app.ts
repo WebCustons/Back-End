@@ -39,12 +39,13 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 
 //Rotas
 
-app.use(handleAppError)
 
 app.use("/login", loginRoutes)
 app.use("/users", userRoutes)
 app.use("/adverts", advertsRoutes)
 app.use("/adverts", imageGalleryRoutes)
 app.use("/comments", commentsRoutes)
+
+app.use(handleAppError)
 
 export default app

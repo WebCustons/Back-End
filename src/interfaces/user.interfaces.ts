@@ -12,4 +12,4 @@ export type TUserRequest = z.infer<typeof userSchemaRequest>
 
 export type TUserResponse = z.infer<typeof userSchemaResponse>
 
-export type TUserResponseUpdate = z.infer<typeof userSchemaRequestUpdate>
+export type TUserRequestUpdate = z.infer<typeof userSchemaRequestUpdate>

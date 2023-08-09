@@ -4,7 +4,7 @@ import {Address} from './address.entities';
 import {Adverts} from './adverts.entities';
 import {Comments} from './comments.entities';
 
-enum UserType{
+export enum UserType{
     CUSTOMER = 'customer',
     SELLER = 'seller',
     ADMIN = 'admin'
@@ -22,7 +22,7 @@ export class Users{
     @Column({type:'text',  nullable:false, unique:true})
     email:string;
 
-    @Column({type:'varchar', length:11,  nullable:false, unique:true})
+    @Column({type:'varchar', length:14,  nullable:false, unique:true})
     cpf:string;
 
     @Column({type:'int', nullable:false})
@@ -42,10 +42,10 @@ export class Users{
 
     @OneToOne(()=>Address, address=>address.user_, {cascade:true, onDelete:'CASCADE'})
     @JoinColumn()
-    address_:Address
+    address:Address
 
     @OneToMany(()=>Adverts, adverts=>adverts.user_, {cascade:true, onDelete:'CASCADE'})
-    adverts_:Adverts[]
+    adverts:Adverts[]
 
     @OneToMany(()=>Comments, comment=>comment.user_, {cascade:true, onDelete:'CASCADE'})
     comments_:Comments[]
