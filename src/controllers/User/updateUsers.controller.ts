@@ -9,7 +9,7 @@ export const updateUserController = async (
     
     const User: TUserRequest = req.body;
 
-    const updateUser: TUserResponse = await updateUserService(Number(req.params.id), User);
+    const updateUser: TUserResponse = await updateUserService(Number(res.locals.userId), User);
 
     return res.json(updateUser);
 };
