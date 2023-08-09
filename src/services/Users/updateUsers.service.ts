@@ -1,28 +1,25 @@
 import { AppDataSource } from "../../data-source";
-import { Adverts } from "../../entities/adverts.entities";
-import {
-  TAdvertRequestUpdate,
-  TAdvertResponse,
-} from "../../interfaces/advert.interfaces";
-import { advertSchema } from "../../schemas/advert.schema";
+import { Users } from "../../entities/users.entities";
+import { TUserResponse, TUserRequestUpdate } from "../../interfaces/user.interfaces";
+import { userSchemaResponse } from './../../schemas/user.schema';
 
-export const updateAdvertService = async (
-  advertId: number,
-  advertData: Adverts
-): Promise<TAdvertResponse> => {
-  const advertRepository = AppDataSource.getRepository(Adverts);
+export const updateUserService = async (
+  userId: number,
+  userData: TUserRequestUpdate
+): Promise<TUserResponse> => {
+  const userRepository = AppDataSource.getRepository(Users);
 
-  const advert = await advertRepository.findOne({
-    where: { id: advertId },
+  const user = await userRepository.findOne({
+    where: { id: userId },
   });
 
-  if (!advert) {
-    throw new Error("Advert not found");
+  if (!user) {
+    throw new Error("User not found");
   }
 
-  const updatedAdvert = advertRepository.merge(advert, advertData);
+  const updatedUser = Object.assign(user, userData);
 
-  await advertRepository.save(updatedAdvert);
+  await userRepository.save(updatedUser);
 
-  return advertSchema.parse(updatedAdvert);
+  return userSchemaResponse.parse(updatedUser);
 };

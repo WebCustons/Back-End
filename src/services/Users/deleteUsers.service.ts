@@ -1,15 +1,17 @@
 import { AppDataSource } from "../../data-source";
-import { Adverts } from "../../entities/adverts.entities";
+import { Users } from "../../entities/users.entities";
 
-export const deleteAdvertService = async (advertId: number): Promise<void> => {
-  const advertRepository = AppDataSource.getRepository(Adverts);
-  const advertisement = await advertRepository.findOne({
-    where: { id: advertId },
+export const deleteUserService = async (userId: number): Promise<void> => {
+
+  const userRepository = AppDataSource.getRepository(Users);
+  
+  const user = await userRepository.findOne({
+    where: { id: userId },
   });
 
-  if (!advertisement) {
-    throw new Error("Advert not found");
+  if (!user) {
+    throw new Error("User not found");
   }
 
-  await advertRepository.remove(advertisement);
+  await userRepository.remove(user);
 };

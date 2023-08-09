@@ -1,21 +1,21 @@
 import { AppDataSource } from "../../data-source";
-import { Adverts } from "../../entities/adverts.entities";
-import { TAdvertResponse } from "../../interfaces/advert.interfaces";
-import { advertSchema } from "../../schemas/advert.schema";
+import { TUserResponse } from "../../interfaces/user.interfaces";
 import { Repository } from 'typeorm';
+import { Users } from "../../entities/users.entities";
+import { userSchemaResponse } from './../../schemas/user.schema';
 
-export const listOneAdvertService = async (
-  advertId: number
-): Promise<TAdvertResponse> => {
-  const advertRepository: Repository<Adverts> = AppDataSource.getRepository(Adverts);
+export const listOneUserService = async (
+  userId: number
+): Promise<TUserResponse> => {
+  const userRepository: Repository<Users> = AppDataSource.getRepository(Users);
 
-  const advert = await advertRepository.findOne({
-    where: { id: advertId },
+  const user = await userRepository.findOne({
+    where: { id: userId },
   });
 
-  if (!advert) {
-    throw new Error("Advert not found");
+  if (!user) {
+    throw new Error("user not found");
   }
 
-  return advertSchema.parse(advert);
+  return userSchemaResponse.parse(user);
 };

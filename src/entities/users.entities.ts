@@ -42,10 +42,10 @@ export class Users{
 
     @OneToOne(()=>Address, address=>address.user_, {cascade:true, onDelete:'CASCADE'})
     @JoinColumn()
-    address_:Address
+    address:Address
 
     @OneToMany(()=>Adverts, adverts=>adverts.user_, {cascade:true, onDelete:'CASCADE'})
-    adverts_:Adverts[]
+    adverts:Adverts[]
 
     @OneToMany(()=>Comments, comment=>comment.user_, {cascade:true, onDelete:'CASCADE'})
     comments_:Comments[]

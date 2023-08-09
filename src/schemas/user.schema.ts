@@ -34,6 +34,12 @@ export const userSchemaRequest = userSchema
     address: addressSchema.omit({ id: true, user_id: true }),
   });
 
-export const userSchemaResponse = userSchema.omit({ password: true })
+export const userSchemaResponse = userSchema
+  .omit({ password: true })
+  .extend({
+    address: addressSchema.omit({ user_id: true }),
+  });
 
 export const userSchemaRequestUpdate = userSchemaRequest.partial()
+
+export const allUsersSchema = userSchemaResponse.array()

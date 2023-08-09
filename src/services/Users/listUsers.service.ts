@@ -1,12 +1,13 @@
 import { AppDataSource } from "../../data-source";
-import { Adverts } from "../../entities/adverts.entities";
-import { TAdvertResponse } from "../../interfaces/advert.interfaces";
-import { allAdvertSchema } from "../../schemas/advert.schema";
+import { Users } from "../../entities/users.entities";
+import { TUserResponse } from "../../interfaces/user.interfaces";
+import { allUsersSchema } from './../../schemas/user.schema';
 
-export const listAdvertService = async (): Promise<TAdvertResponse[]> => {
-  const advertRepository = AppDataSource.getRepository(Adverts);
+export const listUsersService = async (): Promise<TUserResponse[]> => {
 
-  const allAdverts = await advertRepository.find();
+  const UsersRepository = AppDataSource.getRepository(Users);
 
-  return allAdvertSchema.parse(allAdverts);
+  const allUsers = await UsersRepository.find();
+
+  return allUsersSchema.parse(allUsers);
 };
