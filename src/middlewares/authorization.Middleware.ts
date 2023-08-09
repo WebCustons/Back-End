@@ -6,8 +6,6 @@ import { AppDataSource } from "../data-source";
 import { Adverts } from "../entities/adverts.entities";
 import { Users } from "../entities/users.entities";
 import { Comments } from "../entities/comments.entities";
-import { Repository, Entity } from 'typeorm';
-
 
 export const verifyAuthToken = async (req: Request, res: Response, next: NextFunction) => {
     const token: string | undefined = req.headers.authorization;
@@ -23,25 +21,28 @@ export const verifyAuthToken = async (req: Request, res: Response, next: NextFun
         process.env.SECRET_KEY!,
         (err: any, decoded: any) => {
             if (err) {
-                throw new AppError("Invalid token", 401)
+                throw new AppError("Invalid token", 401);
             }
             res.locals.userId = decoded.sub;
             return next();
-        })
+        }
+    );
+};
+
+export const isResourceOwner = (resource: any, userId: number) => {
+    return (resource.user === userId) || (resource.id === userId);
 };
 
 export const isOwner = async (req: Request, res: Response, next: NextFunction) => {
-
     const userId = res.locals.userId;
     const resourceId = Number(req.params.id);
     const sharedDataSource: string = req.baseUrl.replace("/", "");
-
     const dataSources = [
         { name: "adverts", value: Adverts },
         { name: "comments", value: Comments },
         { name: "users", value: Users }
     ];
-    const resourceDataSource = dataSources.find(entity => { entity.name == sharedDataSource });
+    const resourceDataSource = dataSources.find(entity => entity.name === sharedDataSource);
 
     const repository = AppDataSource.getRepository(resourceDataSource!.value);
 
@@ -49,15 +50,38 @@ export const isOwner = async (req: Request, res: Response, next: NextFunction) =
         where: { id: resourceId }
     });
 
-    if (
-        (sharedDataSource !== "users" && resource!.user_ !== userId) ||
-        (sharedDataSource === "users" && resource!.id !== userId)
-    ) {
+    if (!isResourceOwner(resource, userId)) {
         throw new AppError(`This ${sharedDataSource} does not belong to you`, 401);
     }
 
     return next();
-
-
 };
 
+export const isAdmin = async (req: Request, res: Response, next: NextFunction) => {
+    const userId = res.locals.userId;
+
+    const repository = AppDataSource.getRepository(Users);
+
+    const user = await repository.findOne({
+        where: { id: userId }
+    });
+
+    if (user!.type_user !== 'admin') {
+        throw new AppError(`You are not an admin`, 401);
+    }
+
+    return next();
+};
+
+export const isOwnerOrAdmin = async (req: Request, res: Response, next: NextFunction) => {
+    const userId = res.locals.userId;
+    const resourceId = Number(req.params.id);
+    const sharedDataSource: string = req.baseUrl.replace("/", "");
+    const user = res.locals.user;
+
+    if (user.type_user === 'admin' || isResourceOwner(resourceId, userId)) {
+        return next();
+    }
+
+    throw new AppError(`This ${sharedDataSource} does not belong to you`, 401);
+};
