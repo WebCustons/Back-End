@@ -14,4 +14,5 @@ export const deleteUserService = async (userId: number): Promise<void> => {
   }
 
   await userRepository.remove(user);
+  
 };

@@ -5,7 +5,9 @@ import { TUserRequest, TUserResponse } from "../../interfaces/user.interfaces";
 import { userSchemaResponse } from "../../schemas/user.schema";
 
 export const createUserService = async (userData: TUserRequest): Promise<TUserResponse> => {
+
   const addressRepository = AppDataSource.getRepository(Address);
+  
   const userRepository = AppDataSource.getRepository(Users);
 
   const { address, type_user, ...userFields } = userData;
