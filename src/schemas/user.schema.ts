@@ -31,7 +31,7 @@ export const userSchema = z.object({
 export const userSchemaRequest = userSchema
   .omit({ id: true })
   .extend({
-    address: addressSchema.omit({ id: true, user_id:true }),
+    address: addressSchema.omit({ id: true, user_id: true }),
   });
 
 export const userSchemaResponse = userSchema.omit({ password: true })
