@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { listfiltersAdvertsService } from "../../services/adverts/listfiltersAdverts.service";
 import { TAdvertRequestUpdate, TAdvertResponse } from "../../interfaces/advert.interfaces";
 import { IPagination } from './../../interfaces/pagina.interface';
-import { log } from 'console';
 
 export const filteredAdvertsController = async (
   req: Request,
