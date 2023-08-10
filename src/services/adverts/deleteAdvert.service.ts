@@ -5,7 +5,8 @@ import { AppError } from "../../errors"
 export const deleteAdvertService = async (advertId: number): Promise<void> => {
   const advertRepository = AppDataSource.getRepository(Adverts)
   const advertisement = await advertRepository.findOne({
-    where: { id: advertId },
+    where: { id: advertId }
+    
   })
 
   if (!advertisement) {

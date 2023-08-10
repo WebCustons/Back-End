@@ -14,5 +14,5 @@ export const createAdvertsController = async (
 
   const newAdvert: TAdvertResponse = await createAdvertService(advert, userId)
 
-  return res.status(201).json(newAdvert)
-}
+  return res.json(newAdvert);
+};

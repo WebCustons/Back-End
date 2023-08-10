@@ -1,34 +1,17 @@
 import { Router } from "express"
-import { createUsersController } from "../controllers/user/createUsers.controller"
-import { schemaValidator } from "../middlewares/schema.middlewares"
 import { userSchemaRequest } from "../schemas/user.schema"
-import {
-  isAdmin,
-  verifyAuthToken,
-  isOwner,
-  isOwnerOrAdmin,
-} from "./../middlewares/authorization.middleware"
-import { listOneUsersController } from "./../controllers/user/listOneUsers.controller"
-import { updateUserController } from "./../controllers/user/updateUsers.controller"
-import { listAllUsersController } from "./../controllers/user/listAllUsers.controller"
-import { deleteUserController } from "../controllers/user/deleteUsers.controller"
-import { userExists } from "../middlewares/users.middlewares"
-
+import { userExists } from './../middlewares/users.middlewares';
+import { createUsersController } from './../controllers/User/createUsers.controller';
+import { listOneUsersController } from './../controllers/User/listOneUsers.controller';
+import { listAllUsersController } from './../controllers/User/listAllUsers.controller';
+import { updateUserController } from './../controllers/User/updateUsers.controller';
+import { deleteUserController } from './../controllers/User/deleteUsers.controller';
+import { schemaValidator } from "../middlewares/schema.middlewares";
+import { isAdmin, verifyAuthToken, isOwner, isOwnerOrAdmin } from './../middlewares/authorization.middleware';
 export const userRoutes = Router()
 
-userRoutes.post(
-  "/",
-  schemaValidator(userSchemaRequest),
-  userExists,
-  createUsersController
-)
+userRoutes.post("/", schemaValidator(userSchemaRequest), userExists, createUsersController)
 userRoutes.get("/", verifyAuthToken, listOneUsersController)
 userRoutes.get("/all", verifyAuthToken, isAdmin, listAllUsersController)
-userRoutes.patch(
-  "/",
-  verifyAuthToken,
-  isOwner,
-  userExists,
-  updateUserController
-)
+userRoutes.patch("/", verifyAuthToken, isOwner, userExists, updateUserController)
 userRoutes.delete("/", verifyAuthToken, isOwnerOrAdmin, deleteUserController)

@@ -11,6 +11,7 @@ export const listOneAdvertService = async (
 
   const advert = await advertRepository.findOne({
     where: { id: advertId },
+    relations: { Users: true }
   });
 
   if (!advert) {
