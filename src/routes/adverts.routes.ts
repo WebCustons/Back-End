@@ -7,6 +7,7 @@ import { deleteAdvertsController } from "../controllers/adverts/deleteAdverts.co
 import { schemaValidator } from "../middlewares/schema.middlewares"
 import { advertSchemaRequest, advertSchemaRequestUpdate, } from "../schemas/advert.schema"
 import { isOwner, isOwnerOrAdmin, verifyAuthToken } from "../middlewares/authorization.Middleware"
+import { listfiltersAdvertsController } from './../controllers/adverts/listfiltersAdverts.controller';
 
 export const advertsRoutes = Router()
 
@@ -15,3 +16,4 @@ advertsRoutes.get("/", listAdvertsController)
 advertsRoutes.get("/:id", listOneAdvertsController)
 // advertsRoutes.patch("/:id", verifyAuthToken,isOwner,  schemaValidator(advertSchemaRequestUpdate), updateAdvertsController);
 advertsRoutes.delete("/:id", verifyAuthToken, isOwnerOrAdmin, deleteAdvertsController)
+advertsRoutes.get("/filters", listfiltersAdvertsController)

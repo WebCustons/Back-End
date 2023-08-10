@@ -22,10 +22,7 @@ export const createUserService = async (userData: TUserRequest): Promise<TUserRe
     address: newAddress
   });
 
-  const createdUser = await userRepository.save(newUser);
-
-  console.log(createdUser);
-  
+  await userRepository.save(newUser);
 
   return userSchemaResponse.parse(newUser);
 };

@@ -1,11 +1,11 @@
 import { z } from "zod";
 import { FuelType } from "../entities/adverts.entities";
+import { userSchema  } from './user.schema';
 
 export const advertSchema = z.object({
   id: z.number(),
   brand: z.string(),
   model: z.string(),
-  doors: z.number().int(),
   year: z.number().int().positive(),
   fuel: z.enum([FuelType.GASOLINA, FuelType.ETANOL]),
   mileage: z.number().int().positive(),
@@ -15,11 +15,14 @@ export const advertSchema = z.object({
   description: z.string(),
   cover_image: z.string(),
   published: z.boolean(),
-  user_id: z.number(),
+  Users: userSchema.omit({ address: true, password: true }),
 });
 
-export const allAdvertSchema = advertSchema.array();
 
-export const advertSchemaRequest = advertSchema.omit({ id: true,user_id:true });
+export const advertSchemaRequest = advertSchema.omit({ id: true, Users: true });
 
 export const advertSchemaRequestUpdate = advertSchemaRequest.partial();
+
+export const advertSchemaResponse = advertSchema
+
+export const allAdvertSchema = advertSchema.array()

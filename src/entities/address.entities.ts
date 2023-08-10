@@ -30,5 +30,5 @@ export class Address {
   complement: string;
 
   @OneToOne(() => Users, (user) => user.address)
-  user_: Users;
+  user: Users;
 }
