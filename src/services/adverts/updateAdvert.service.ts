@@ -1,28 +1,46 @@
-import { AppDataSource } from "../../data-source";
-import { Adverts } from "../../entities/adverts.entities";
+import { DeepPartial } from "typeorm"
+import { AppDataSource } from "../../data-source"
+import { Adverts } from "../../entities/adverts.entities"
+import { AppError } from "../../errors"
 import {
+  TAdvert,
   TAdvertRequestUpdate,
   TAdvertResponse,
-} from "../../interfaces/advert.interfaces";
-import { advertSchema } from "./../../schemas/advert.schema";
+} from "../../interfaces/advert.interfaces"
+import {
+  advertSchema,
+  advertSchemaResponse,
+} from "./../../schemas/advert.schema"
+import { Users } from "../../entities/users.entities"
 
 export const updateAdvertService = async (
   advertId: number,
-  advertData: Adverts
+  userId: number,
+  advertData: TAdvertRequestUpdate
 ): Promise<TAdvertResponse> => {
-  const advertRepository = AppDataSource.getRepository(Adverts);
+  const userRepository = AppDataSource.getRepository(Users)
 
-  const advert = await advertRepository.findOne({
+  const user = await userRepository.findOneBy({ id: userId })
+
+  const advertRepository = AppDataSource.getRepository(Adverts)
+
+  const oldDataAdvert = await advertRepository.findOne({
     where: { id: advertId },
-  });
+  })
 
-  if (!advert) {
-    throw new Error("Advert not found");
+  if (!oldDataAdvert) {
+    throw new AppError("Advert not found", 404)
   }
 
-  const updatedAdvert = advertRepository.merge(advert, advertData);
+  const newDataAdvert = advertRepository.create({
+    ...oldDataAdvert,
+    ...advertData,
+    Users: user,
+  } as DeepPartial<Adverts>)
 
-  await advertRepository.save(updatedAdvert);
+  await advertRepository.save(newDataAdvert)
 
-  return advertSchema.parse(updatedAdvert);
-};
+  const validateResponse = advertSchemaResponse.parse(newDataAdvert)
+
+  return advertSchema.parse(validateResponse)
+}
