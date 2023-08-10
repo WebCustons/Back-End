@@ -1,28 +1,46 @@
-// import { AppDataSource } from "../../data-source";
-// import { Adverts } from "../../entities/adverts.entities";
-// import {
-//   TAdvertRequestUpdate,
-//   TAdvertResponse,
-// } from "../../interfaces/advert.interfaces";
-// import { advertSchema } from "./../../schemas/advert.schema";
+import { DeepPartial } from "typeorm"
+import { AppDataSource } from "../../data-source"
+import { Adverts } from "../../entities/adverts.entities"
+import { AppError } from "../../errors"
+import {
+  TAdvert,
+  TAdvertRequestUpdate,
+  TAdvertResponse,
+} from "../../interfaces/advert.interfaces"
+import {
+  advertSchema,
+  advertSchemaResponse,
+} from "./../../schemas/advert.schema"
+import { Users } from "../../entities/users.entities"
 
-// export const updateAdvertService = async (
-//   advertId: number,
-//   advertData: TAdvertRequestUpdate
-// ): Promise<TAdvertResponse> => {
-//   const advertRepository = AppDataSource.getRepository(Adverts);
+export const updateAdvertService = async (
+  advertId: number,
+  userId: number,
+  advertData: TAdvertRequestUpdate
+): Promise<TAdvertResponse> => {
+  const userRepository = AppDataSource.getRepository(Users)
 
-//   const advert = await advertRepository.findOne({
-//     where: { id: advertId },
-//   });
+  const user = await userRepository.findOneBy({ id: userId })
 
-//   if (!advert) {
-//     throw new Error("Advert not found");
-//   }
+  const advertRepository = AppDataSource.getRepository(Adverts)
 
-//   const updatedAdvert = advertRepository.merge(...advertData, advert);
+  const oldDataAdvert = await advertRepository.findOne({
+    where: { id: advertId },
+  })
 
-//   await advertRepository.save(updatedAdvert);
+  if (!oldDataAdvert) {
+    throw new AppError("Advert not found", 404)
+  }
 
-//   return advertSchema.parse(updatedAdvert);
-// };
+  const newDataAdvert = advertRepository.create({
+    ...oldDataAdvert,
+    ...advertData,
+    Users: user,
+  } as DeepPartial<Adverts>)
+
+  await advertRepository.save(newDataAdvert)
+
+  const validateResponse = advertSchemaResponse.parse(newDataAdvert)
+
+  return advertSchema.parse(validateResponse)
+}

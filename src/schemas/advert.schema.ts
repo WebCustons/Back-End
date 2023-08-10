@@ -1,6 +1,6 @@
-import { z } from "zod";
-import { FuelType } from "../entities/adverts.entities";
-import { userSchema  } from './user.schema';
+import { z } from "zod"
+import { FuelType } from "../entities/adverts.entities"
+import { userSchema } from "./user.schema"
 
 export const advertSchema = z.object({
   id: z.number(),
@@ -16,12 +16,11 @@ export const advertSchema = z.object({
   cover_image: z.string(),
   published: z.boolean(),
   Users: userSchema.omit({ address: true, password: true }),
-});
+})
 
+export const advertSchemaRequest = advertSchema.omit({ id: true, Users: true })
 
-export const advertSchemaRequest = advertSchema.omit({ id: true, Users: true });
-
-export const advertSchemaRequestUpdate = advertSchemaRequest.partial();
+export const advertSchemaRequestUpdate = advertSchemaRequest.partial()
 
 export const advertSchemaResponse = advertSchema
 
