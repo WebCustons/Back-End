@@ -3,7 +3,6 @@ import { createAdvertsController } from "../controllers/adverts/createAdverts.co
 import { listAdvertsController } from "../controllers/adverts/listAdverts.controller"
 import { listOneAdvertsController } from "../controllers/adverts/listOneAdvert.controller"
 import { deleteAdvertsController } from "../controllers/adverts/deleteAdverts.controller"
-// import { updateAdvertsController } from "../controllers/adverts/updateAdverts.controller"
 import { schemaValidator } from "../middlewares/schema.middlewares"
 import {
   advertSchemaRequest,
@@ -15,6 +14,7 @@ import {
   verifyAuthToken,
 } from "../middlewares/authorization.middleware"
 import { listfiltersAdvertsController } from "./../controllers/adverts/listfiltersAdverts.controller"
+import { updateAdvertsController } from "../controllers/adverts/updateAdverts.controller"
 
 export const advertsRoutes = Router()
 
@@ -26,11 +26,17 @@ advertsRoutes.post(
 )
 advertsRoutes.get("/", listAdvertsController)
 advertsRoutes.get("/:id", listOneAdvertsController)
-// advertsRoutes.patch("/:id", verifyAuthToken,isOwner,  schemaValidator(advertSchemaRequestUpdate), updateAdvertsController);
+advertsRoutes.patch(
+  "/:id",
+  verifyAuthToken,
+  // isOwner,
+  schemaValidator(advertSchemaRequestUpdate),
+  updateAdvertsController
+)
 advertsRoutes.delete(
   "/:id",
   verifyAuthToken,
-  isOwnerOrAdmin,
+  // isOwnerOrAdmin,
   deleteAdvertsController
 )
 advertsRoutes.get("/filters", listfiltersAdvertsController)
