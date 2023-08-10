@@ -18,5 +18,5 @@ export const createAdvertsController = async (
     userId
   );
 
-  return res.status(201).json(newAdvert);
+  return res.json(newAdvert);
 };

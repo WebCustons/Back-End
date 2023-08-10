@@ -26,7 +26,7 @@ export const verifyAuthToken = async (req: Request, res: Response, next: NextFun
                 throw new AppError("Invalid token", 401);
             }
             console.log(decoded.subject);
-            
+
             res.locals.userId = decoded.subject;
             return next();
         }
@@ -49,16 +49,25 @@ export const isOwner = async (req: Request, res: Response, next: NextFunction) =
     const resourceDataSource = dataSources.find(entity => entity.name === sharedDataSource);
 
     const repository = AppDataSource.getRepository(resourceDataSource!.value);
+    
+    const resourceQuery = {
+        where: {
+            id: resourceId
+        }
+    };
 
-    const resource = await repository.findOne({
-        where: { id: resourceId }
-    });
-
-    if (!isResourceOwner(resource, userId)) {
-        throw new AppError(`This ${sharedDataSource} does not belong to you`, 401);
+    if (sharedDataSource !== "users") {
+        Object.assign(resourceQuery, { relations: { user: true } });
     }
 
-    return next();
+
+    const resource = await repository.findOne(resourceQuery);
+
+if (!isResourceOwner(resource, userId)) {
+    throw new AppError(`This ${sharedDataSource} does not belong to you`, 401);
+}
+
+return next();
 };
 
 export const isAdmin = async (req: Request, res: Response, next: NextFunction) => {
@@ -68,6 +77,7 @@ export const isAdmin = async (req: Request, res: Response, next: NextFunction) =
 
     const user = await repository.findOne({
         where: { id: userId }
+
     });
 
     if (user!.type_user !== 'admin') {

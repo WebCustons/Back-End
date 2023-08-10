@@ -10,8 +10,8 @@ import { deleteUserController } from "../controllers/User/deleteUsers.controller
 
 export const userRoutes = Router()
 
-userRoutes.post("/", schemaValidator(userSchemaRequest), createUsersController)
-userRoutes.get("/", verifyAuthToken, listOneUsersController)
+userRoutes.post("", schemaValidator(userSchemaRequest), createUsersController)
+userRoutes.get("", verifyAuthToken, listOneUsersController)
 userRoutes.get("/all", verifyAuthToken, isAdmin, listAllUsersController)
-userRoutes.patch("/", verifyAuthToken, isOwner, updateUserController)
-userRoutes.delete("/", verifyAuthToken, isOwnerOrAdmin, deleteUserController)
+userRoutes.patch("", verifyAuthToken, isOwner, updateUserController)
+userRoutes.delete("", verifyAuthToken, isOwnerOrAdmin, deleteUserController)
