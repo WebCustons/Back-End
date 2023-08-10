@@ -8,7 +8,9 @@ import { Users } from "../entities/users.entities";
 import { Comments } from "../entities/comments.entities";
 
 export const verifyAuthToken = async (req: Request, res: Response, next: NextFunction) => {
+
     const token: string | undefined = req.headers.authorization;
+
 
     if (!token) {
         throw new AppError("Unauthorized: Token missing", 401);
@@ -23,7 +25,9 @@ export const verifyAuthToken = async (req: Request, res: Response, next: NextFun
             if (err) {
                 throw new AppError("Invalid token", 401);
             }
-            res.locals.userId = decoded.sub;
+            console.log(decoded.subject);
+            
+            res.locals.userId = decoded.subject;
             return next();
         }
     );

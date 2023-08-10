@@ -8,7 +8,7 @@ const addressSchema = z.object({
   road: z.string(),
   number: z.number(),
   complement: z.string(),
-  user_id: z.number(),
+  user: z.number(),
 })
 
 export const userSchema = z.object({
@@ -31,13 +31,13 @@ export const userSchema = z.object({
 export const userSchemaRequest = userSchema
   .omit({ id: true })
   .extend({
-    address: addressSchema.omit({ id: true, user_id: true }),
+    address: addressSchema.omit({ id: true, user: true }),
   });
 
 export const userSchemaResponse = userSchema
   .omit({ password: true })
   .extend({
-    address: addressSchema.omit({ user_id: true }),
+    address: addressSchema.omit({ user:true}),
   });
 
 export const userSchemaRequestUpdate = userSchemaRequest.partial()

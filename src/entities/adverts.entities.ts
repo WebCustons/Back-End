@@ -1,6 +1,7 @@
 import {
   Column,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -53,7 +54,7 @@ export class Adverts {
   published: boolean;
 
   @ManyToOne(() => Users, (user) => user.adverts)
-  user: Users;
+  Users: Users;
 
   @OneToMany(() => ImageGallery, (gallery) => gallery.advert, {
     cascade: true,
