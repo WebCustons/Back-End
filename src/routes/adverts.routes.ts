@@ -18,7 +18,7 @@ advertsRoutes.get("/:id", listOneAdvertsController);
 
 advertsRoutes.post("", verifyAuthToken, schemaValidator(advertSchemaRequest), createAdvertsController);
 
-advertsRoutes.patch("", verifyAuthToken, isOwner, schemaValidator(advertSchemaRequestUpdate), updateAdvertsController);
+advertsRoutes.patch("/:id", verifyAuthToken, isOwner, schemaValidator(advertSchemaRequestUpdate), updateAdvertsController);
 
 advertsRoutes.delete("/:id", verifyAuthToken, isOwnerOrAdmin, deleteAdvertsController);
 

@@ -29,10 +29,11 @@ export const verifyAuthToken = async (req: Request, res: Response, next: NextFun
 };
 
 export const isResourceOwner = (resource: any, userId: number) => {
-    return resource === userId || resource.user === userId
+    return resource === userId || resource.user.id === userId
 }
 
 export const isOwner = async (req: Request, res: Response, next: NextFunction) => {
+
     const userId = res.locals.userId;
     const resourceId = Number(req.params.id);
     const sharedDataSource: string = req.baseUrl.replace("/", "");
@@ -50,14 +51,13 @@ export const isOwner = async (req: Request, res: Response, next: NextFunction) =
             id: resourceId
         }
     };
-
+    
     if (sharedDataSource !== "users") {
         Object.assign(resourceQuery, { relations: { user: true } });
     }
-
-
+    
     const resource = await repository.findOne(resourceQuery);
-
+    
     if (!isResourceOwner(resource, userId)) {
         throw new AppError(`This ${sharedDataSource} does not belong to you`, 401);
     }

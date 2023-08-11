@@ -22,7 +22,7 @@ export const advertSchemaRequest = advertSchema.omit({ id: true, user: true })
 
 export const advertSchemaRequestUpdate = advertSchemaRequest.partial()
 
-export const advertSchemaRequestfilters = advertSchemaRequest.omit({ description: true, cover_image: true}).partial()
+export const advertSchemaRequestfilters = advertSchemaRequest.omit({ description: true, cover_image: true }).partial()
 
 export const advertSchemaResponse = advertSchema
 
