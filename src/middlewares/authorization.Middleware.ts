@@ -7,11 +7,7 @@ import { Adverts } from "../entities/adverts.entities"
 import { Users } from "../entities/users.entities"
 import { Comments } from "../entities/comments.entities"
 
-export const verifyAuthToken = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const verifyAuthToken = async (req: Request, res: Response, next: NextFunction) => {
   const token: string | undefined = req.headers.authorization
 
   if (!token) {
@@ -19,17 +15,17 @@ export const verifyAuthToken = async (
   }
   const splitToken = token.split(" ")[1]
 
-    Jwt.verify(
-        splitToken,
-        process.env.SECRET_KEY!,
-        (err: any, decoded: any) => {
-            if (err) {
-                throw new AppError("Invalid token", 401);
-            }
-            res.locals.userId = decoded.subject;
-            return next();
-        }
-    );
+  Jwt.verify(
+    splitToken,
+    process.env.SECRET_KEY!,
+    (err: any, decoded: any) => {
+      if (err) {
+        throw new AppError("Invalid token", 401);
+      }
+      res.locals.userId = decoded.subject;
+      return next();
+    }
+  );
 };
 
 export const isResourceOwner = (resource: any, userId: number) => {
@@ -78,9 +74,9 @@ export const isAdmin = async (
 
   const repository = AppDataSource.getRepository(Users)
 
-    const user = await repository.findOne({
-        where: { id: userId }
-    });
+  const user = await repository.findOne({
+    where: { id: userId }
+  });
 
   if (user!.type_user !== "admin") {
     throw new AppError(`You are not an admin`, 401)
