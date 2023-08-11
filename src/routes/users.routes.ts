@@ -7,7 +7,7 @@ import { listAllUsersController } from './../controllers/User/listAllUsers.contr
 import { updateUserController } from './../controllers/User/updateUsers.controller';
 import { deleteUserController } from './../controllers/User/deleteUsers.controller';
 import { schemaValidator } from "../middlewares/schema.middlewares";
-import { isAdmin, verifyAuthToken, isOwner, isOwnerOrAdmin } from '../middlewares/authorization.middleware';
+import { isAdmin, verifyAuthToken, isOwner, isOwnerOrAdmin } from '../middlewares/authorization.mid';
 export const userRoutes = Router()
 
 userRoutes.post("/", schemaValidator(userSchemaRequest), userExists, createUsersController)
