@@ -18,8 +18,11 @@ export const listfiltersAdvertsService = async (
   const { brand, color, fuel, model, year, price, mileage } = where;
 
   const allAdvertsFilters = await advertRepository.find({
-    skip: perPageReq * (pageReq - 1),
     take: perPageReq,
+    skip: perPageReq * (pageReq - 1),
+    order:{
+      id:'ASC'
+    },
     where: {
       ...(brand && { brand }),
       ...(color && { color }),
@@ -30,7 +33,7 @@ export const listfiltersAdvertsService = async (
       ...(mileage !== undefined && !isNaN(mileage) && { mileage }),
     },
     relations: {
-      Users: true
+      user: true
     }
   });
 

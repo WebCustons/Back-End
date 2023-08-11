@@ -5,10 +5,11 @@ import { TAdvertResponse } from "../../interfaces/advert.interfaces";
 export const listOneAdvertsController = async (
   req: Request,
   res: Response
-): Promise<TAdvertResponse> => {
+): Promise<Response<TAdvertResponse>> => {
+  
   const advertUser: TAdvertResponse = await listOneAdvertService(
     Number(req.params.id)
   );
 
-  return advertUser;
+  return res.json(advertUser);
 };
