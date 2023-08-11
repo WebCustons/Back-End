@@ -5,10 +5,7 @@ import {
 } from "../../interfaces/imageGallery.interfaces";
 import { updateImgAdvertService } from "../../services/images/updateImgAdvert.controller";
 
-export const updateImgAdvertController = async (
-  req: Request,
-  res: Response
-): Promise<Response<TImageGalleryResponse>> => {
+export const updateImgAdvertController = async (req: Request, res: Response): Promise<Response<TImageGalleryResponse>> => {
   const img: TImageGalleryRequest = req.body;
 
   const userId = Number(res.locals.userId);
