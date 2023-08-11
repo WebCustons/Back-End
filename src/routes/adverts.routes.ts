@@ -5,10 +5,10 @@ import { listOneAdvertsController } from "../controllers/adverts/listOneAdvert.c
 import { deleteAdvertsController } from "../controllers/adverts/deleteAdverts.controller"
 import { schemaValidator } from "../middlewares/schema.middlewares"
 import { advertSchemaRequest, advertSchemaRequestfilters, advertSchemaRequestUpdate, } from "../schemas/advert.schema"
-import { isOwner, isOwnerOrAdmin, verifyAuthToken, } from "../middlewares/authorization.mid"
 import { filteredAdvertsController } from "./../controllers/adverts/listfiltersAdverts.controller"
 import { updateAdvertsController } from "../controllers/adverts/updateAdverts.controller"
 import { createFiltersAdvertController } from './../controllers/adverts/createFiltesAdvert.controller ';
+import { verifyAuthToken, isOwner, isOwnerOrAdmin } from "../middlewares/authorization.Middleware"
 
 export const advertsRoutes = Router()
 
