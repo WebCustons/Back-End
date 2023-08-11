@@ -29,7 +29,7 @@ export const verifyAuthToken = async (req: Request, res: Response, next: NextFun
 };
 
 export const isResourceOwner = (resource: any, userId: number) => {
-    return resource.user === userId || resource.id === userId
+    return resource === userId || resource.user === userId
 }
 
 export const isOwner = async (req: Request, res: Response, next: NextFunction) => {
@@ -93,9 +93,15 @@ export const isOwnerOrAdmin = async (
     const userId = res.locals.userId
     const resourceId = Number(req.params.id)
     const sharedDataSource: string = req.baseUrl.replace("/", "")
-    const user = res.locals.user
 
-    if (user.type_user === "admin" || isResourceOwner(resourceId, userId)) {
+    const repository = AppDataSource.getRepository(Users)
+
+    const user = await repository.findOne({
+        where: { id: userId }
+    });
+    
+
+    if (user?.type_user === "admin" || isResourceOwner(resourceId, userId)) {
         return next()
     }
 

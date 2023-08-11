@@ -11,7 +11,7 @@ import { verifyAuthToken, isOwner, isAdmin, isOwnerOrAdmin } from "../middleware
 export const userRoutes = Router()
 
 userRoutes.post("/", schemaValidator(userSchemaRequest), userExists, createUsersController)
-userRoutes.get("/", verifyAuthToken, listOneUsersController)
+userRoutes.get("/:id", verifyAuthToken, isOwnerOrAdmin, listOneUsersController)
 userRoutes.get("/all", verifyAuthToken, isAdmin, listAllUsersController)
 userRoutes.patch("/", verifyAuthToken, isOwner, userExists, updateUserController)
 userRoutes.delete("/", verifyAuthToken, isOwnerOrAdmin, deleteUserController)
