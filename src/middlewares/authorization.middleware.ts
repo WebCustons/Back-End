@@ -3,10 +3,8 @@ import Jwt from "jsonwebtoken"
 import "dotenv/config"
 import { AppError } from "../errors"
 import { AppDataSource } from "../data-source"
-import { Adverts } from "../entities/adverts.entities"
 import { Users } from "../entities/users.entities"
-import { Comments } from "../entities/comments.entities"
-
+import { ImageGallery } from './../entities/imageGallery.entities';
 export const verifyAuthToken = async (req: Request, res: Response, next: NextFunction) => {
     const token: string | undefined = req.headers.authorization
 
@@ -29,37 +27,38 @@ export const verifyAuthToken = async (req: Request, res: Response, next: NextFun
 };
 
 export const isResourceOwner = (resource: any, userId: number) => {
-    return resource === userId || resource.user.id === userId
+    if (resource && resource.user) {
+        return resource.user.id === userId;
+    } else if (resource.advert.user.id) {
+        return resource.advert.user.id === userId;
+    }
+
 }
 
-export const isOwner = async (req: Request, res: Response, next: NextFunction) => {
+export const isOwner = (entity: any) => async (req: Request, res: Response, next: NextFunction) => {
 
     const userId = res.locals.userId;
     const resourceId = Number(req.params.id);
-    const sharedDataSource: string = req.baseUrl.replace("/", "");
-    const dataSources = [
-        { name: "adverts", value: Adverts },
-        { name: "comments", value: Comments },
-        { name: "users", value: Users }
-    ];
-    const resourceDataSource = dataSources.find(entity => entity.name === sharedDataSource);
 
-    const repository = AppDataSource.getRepository(resourceDataSource!.value);
+    const repository = AppDataSource.getRepository(entity);
 
     const resourceQuery = {
         where: {
             id: resourceId
         }
     };
-    
-    if (sharedDataSource !== "users") {
-        Object.assign(resourceQuery, { relations: { user: true } });
+
+    if (entity !== Users && entity !== ImageGallery) {
+        Object.assign(resourceQuery, { relations: ["user"] });
+    } else if (entity === ImageGallery) {
+        Object.assign(resourceQuery, { relations: ["advert", "advert.user"] });
     }
-    
+
     const resource = await repository.findOne(resourceQuery);
+
     
-    if (!isResourceOwner(resource, userId)) {
-        throw new AppError(`This ${sharedDataSource} does not belong to you`, 401);
+    if (!resource || !isResourceOwner(resource, userId)) {
+        throw new AppError(`This ${entity} does not belong to you`, 401);
     }
 
     return next();
@@ -99,7 +98,7 @@ export const isOwnerOrAdmin = async (
     const user = await repository.findOne({
         where: { id: userId }
     });
-    
+
 
     if (user?.type_user === "admin" || isResourceOwner(resourceId, userId)) {
         return next()

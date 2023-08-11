@@ -17,6 +17,7 @@ import {
   isOwner,
   isOwnerOrAdmin,
 } from "../middlewares/authorization.middleware";
+import { Adverts } from "../entities/adverts.entities";
 
 export const advertsRoutes = Router();
 
@@ -24,21 +25,12 @@ advertsRoutes.get("", listAdvertsController);
 
 advertsRoutes.get("/:id", listOneAdvertsController);
 
-advertsRoutes.post(
-  "",
-  verifyAuthToken,
-  schemaValidator(advertSchemaRequest),
-  createAdvertsController
-);
+advertsRoutes.post(  "",  verifyAuthToken,  schemaValidator(advertSchemaRequest),  createAdvertsController);
 
-advertsRoutes.patch("/:id", verifyAuthToken, isOwner, schemaValidator(advertSchemaRequestUpdate), updateAdvertsController);
+advertsRoutes.patch("/:id", verifyAuthToken, isOwner(Adverts), schemaValidator(advertSchemaRequestUpdate), updateAdvertsController);
 
 advertsRoutes.delete("/:id", verifyAuthToken, isOwnerOrAdmin, deleteAdvertsController);
 
-advertsRoutes.get(
-  "/adverts-filters",
-  schemaValidator(advertSchemaRequestfilters),
-  createFiltersAdvertController
-);
+advertsRoutes.get(  "/adverts-filters",  schemaValidator(advertSchemaRequestfilters),  createFiltersAdvertController);
 
 advertsRoutes.post("/filtered", filteredAdvertsController);
