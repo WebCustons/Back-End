@@ -33,7 +33,6 @@ advertsRoutes.delete(
   verifyAuthToken,
   /*isOwnerOrAdmin*/ deleteAdvertsController
 );
-advertsRoutes.post("/images/:id", verifyAuthToken, createImgAdvertController);
 advertsRoutes.get("/:id", listOneAdvertsController);
 advertsRoutes.post(
   "/",
