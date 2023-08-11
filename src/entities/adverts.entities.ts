@@ -54,7 +54,7 @@ export class Adverts {
   published: boolean;
 
   @ManyToOne(() => Users, (user) => user.adverts)
-  Users: Users;
+  user: Users;
 
   @OneToMany(() => ImageGallery, (gallery) => gallery.advert, {
     cascade: true,

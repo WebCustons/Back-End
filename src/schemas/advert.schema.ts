@@ -15,10 +15,10 @@ export const advertSchema = z.object({
   description: z.string(),
   cover_image: z.string(),
   published: z.boolean(),
-  Users: userSchema.omit({ address: true, password: true }),
+  user: userSchema.omit({ address: true, password: true }),
 })
 
-export const advertSchemaRequest = advertSchema.omit({ id: true, Users: true })
+export const advertSchemaRequest = advertSchema.omit({ id: true, user: true })
 
 export const advertSchemaRequestUpdate = advertSchemaRequest.partial()
 

@@ -8,7 +8,7 @@ import { advertSchemaRequest, advertSchemaRequestfilters, advertSchemaRequestUpd
 import { filteredAdvertsController } from "./../controllers/adverts/listfiltersAdverts.controller"
 import { updateAdvertsController } from "../controllers/adverts/updateAdverts.controller"
 import { createFiltersAdvertController } from './../controllers/adverts/createFiltesAdvert.controller ';
-import { verifyAuthToken, isOwner, isOwnerOrAdmin } from "../middlewares/authorization.Middleware"
+import { verifyAuthToken, isOwner, isOwnerOrAdmin } from "../middlewares/authorization.middleware"
 
 export const advertsRoutes = Router()
 
