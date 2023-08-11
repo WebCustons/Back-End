@@ -4,7 +4,7 @@ import { listAdvertsController } from "../controllers/adverts/listAdverts.contro
 import { listOneAdvertsController } from "../controllers/adverts/listOneAdvert.controller"
 import { deleteAdvertsController } from "../controllers/adverts/deleteAdverts.controller"
 import { schemaValidator } from "../middlewares/schema.middlewares"
-import { advertSchemaRequest, advertSchemaRequestUpdate, } from "../schemas/advert.schema"
+import { advertSchemaRequest, advertSchemaRequestfilters, advertSchemaRequestUpdate, } from "../schemas/advert.schema"
 import { isOwner, isOwnerOrAdmin, verifyAuthToken, } from "../middlewares/authorization.middleware"
 import { filteredAdvertsController } from "./../controllers/adverts/listfiltersAdverts.controller"
 import { updateAdvertsController } from "../controllers/adverts/updateAdverts.controller"
@@ -12,7 +12,7 @@ import { createFiltersAdvertController } from './../controllers/adverts/createFi
 
 export const advertsRoutes = Router()
 
-advertsRoutes.get("/adverts-filters", createFiltersAdvertController)
+advertsRoutes.get("/adverts-filters", schemaValidator(advertSchemaRequestfilters), createFiltersAdvertController)
 advertsRoutes.post("/filtered", filteredAdvertsController)
 advertsRoutes.patch("/:id", verifyAuthToken,/*isOwner ,*/ schemaValidator(advertSchemaRequestUpdate), updateAdvertsController)
 advertsRoutes.delete("/:id", verifyAuthToken,/*isOwnerOrAdmin*/deleteAdvertsController)
