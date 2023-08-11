@@ -11,5 +11,5 @@ export const imageGallerySchema = z.object({
 
 export const imageGallerySchemaRequest = imageGallerySchema.omit({
   id: true,
-  advert_id: true,
+  advert: true,
 });
