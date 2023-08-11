@@ -22,7 +22,7 @@ export const createAdvertService = async (
 
   const newAdvert = advertRepository.create({
     ...advertData,
-    Users: user,
+    user: user,
   });
 
   await advertRepository.save(newAdvert);

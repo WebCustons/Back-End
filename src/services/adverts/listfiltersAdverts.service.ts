@@ -33,7 +33,7 @@ export const listfiltersAdvertsService = async (
       ...(mileage !== undefined && !isNaN(mileage) && { mileage }),
     },
     relations: {
-      Users: true
+      user: true
     }
   });
 
