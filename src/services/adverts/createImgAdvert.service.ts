@@ -11,7 +11,7 @@ export const createImgAdvertService = async (
 ): Promise<TImageGalleryResponse> => {
   const advertRepository = AppDataSource.getRepository(Adverts);
   const advert = await advertRepository.findOne({
-    where: { id: advertId, Users: { id: userId } },
+    where: { id: advertId, user: { id: userId } },
   });
 
   if (!advert) {
@@ -24,6 +24,11 @@ export const createImgAdvertService = async (
   image.advert = advert;
 
   const savedImage = await imageGalleryRepository.save(image);
+  const img = await imageGalleryRepository.findOne({
+    where: { id: savedImage.id },
+    relations: { advert: true },
+  });
+  console.log(img);
 
-  return imageGallerySchema.parse(savedImage);
+  return imageGallerySchema.parse(img);
 };
