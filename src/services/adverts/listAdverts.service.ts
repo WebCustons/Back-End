@@ -16,7 +16,7 @@ export const listAdvertService = async (
   const advertRepository: Repository<Adverts> = AppDataSource.getRepository(Adverts);
 
   const [findAdvert, totalCount] = await advertRepository.createQueryBuilder('adverts')
-    .leftJoinAndSelect('adverts.Users', 'Users')
+    .leftJoinAndSelect('adverts.user', 'Users')
     .orderBy('adverts.id', 'ASC')
     .take(perPageReq)
     .skip(perPageReq * (pageReq - 1))

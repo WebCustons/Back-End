@@ -9,14 +9,15 @@ export const listOneAdvertService = async (
 ): Promise<TAdvertResponse> => {
   const advertRepository: Repository<Adverts> = AppDataSource.getRepository(Adverts);
 
+  
+  
   const advert = await advertRepository.findOne({
     where: { id: advertId },
     relations: { user: true }
   });
-
+  
   if (!advert) {
     throw new Error("Advert not found");
   }
-
   return advertSchemaResponse.parse(advert);
 };

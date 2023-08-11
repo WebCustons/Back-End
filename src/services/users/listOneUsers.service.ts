@@ -5,11 +5,17 @@ import { Users } from "../../entities/users.entities";
 import { userSchemaResponse } from '../../schemas/user.schema';
 
 export const listOneUserService = async (userId: number): Promise<TUserResponse> => {
+
   const userRepository: Repository<Users> = AppDataSource.getRepository(Users);
 
-  const user = await userRepository.findOne({
-    where: { id: userId },
-  });
+  console.log(userId);
+
+  const user = await userRepository.createQueryBuilder('Users')
+    .leftJoinAndSelect('Users.address', 'address')
+    .where('user.id = :id', { id: userId })
+    .getOne();
+
+  console.log(user);
 
   if (!user) {
     throw new Error("user not found");
