@@ -12,6 +12,7 @@ export const filteredAdvertsController = async (
   const page = parseInt(req.query.page as string) || 1;
   const itemsPerPage = parseInt(req.query.pageSize as string) || 12;
 
+
   const where: TAdvertRequestUpdate = {
     ...req.body,
     year: Number(req.body.year),
@@ -19,12 +20,13 @@ export const filteredAdvertsController = async (
     mileage: Number(req.body.mileage),
   };
 
+  
   const adverts: IPagination = await listfiltersAdvertsService(
     page,
     itemsPerPage,
     serverUrl,
     where
-  );
+    );
 
   return res.json(adverts);
 };

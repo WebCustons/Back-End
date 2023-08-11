@@ -13,7 +13,7 @@ import { createFiltersAdvertController } from './../controllers/adverts/createFi
 export const advertsRoutes = Router()
 
 advertsRoutes.get("/adverts-filters", createFiltersAdvertController)
-advertsRoutes.get("/filtered", filteredAdvertsController)
+advertsRoutes.post("/filtered", filteredAdvertsController)
 advertsRoutes.patch("/:id", verifyAuthToken,/*isOwner ,*/ schemaValidator(advertSchemaRequestUpdate), updateAdvertsController)
 advertsRoutes.delete("/:id", verifyAuthToken,/*isOwnerOrAdmin*/deleteAdvertsController)
 advertsRoutes.get("/:id", listOneAdvertsController)
