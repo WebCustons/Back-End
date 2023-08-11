@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { createImgAdvertService } from "../../services/adverts/createImgAdvert.service";
+import { createImgAdvertService } from "../../services/images/createImgAdvert.service";
 import { TImageGalleryResponse } from "../../interfaces/imageGallery.interfaces";
 
 export const createImgAdvertController = async (
