@@ -1,9 +1,9 @@
-import { z } from "zod"
+import { z } from "zod";
 import {
   imageGallerySchema,
   imageGallerySchemaRequest,
-} from "../schemas/imageGallery.schema"
+} from "../schemas/imageGallery.schema";
 
-export type TImageGallery = z.infer<typeof imageGallerySchema>
+export type TImageGalleryResponse = z.infer<typeof imageGallerySchema>;
 
-export type TImageGalleryRequest = z.infer<typeof imageGallerySchemaRequest>
+export type TImageGalleryRequest = z.infer<typeof imageGallerySchemaRequest>;
