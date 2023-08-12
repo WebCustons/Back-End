@@ -18,13 +18,13 @@ export const userSchema = z.object({
   cpf: z.string().regex(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, {
     message: "Cpf deve estar no formato 123.456.789-00",
   }),
-  phone: z.number(),
+  phone: z.string().max(12),
   birth_date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, {
     message: "Data deve estar no formato YYYY-MM-DD",
   }),
   description: z.string(),
   password: z.string(),
-  type_user: z.enum(["costumer", "seller", "admin"]),
+  type_user: z.enum(["customer", "seller", "admin"]),
   address: addressSchema,
 })
 

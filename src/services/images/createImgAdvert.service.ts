@@ -1,34 +1,41 @@
 import { AppDataSource } from "../../data-source";
 import { Adverts } from "../../entities/adverts.entities";
 import { ImageGallery } from "../../entities/imageGallery.entities";
+import { AppError } from "../../errors";
 import { TImageGalleryResponse } from "../../interfaces/imageGallery.interfaces";
-import { imageGallerySchema } from "../../schemas/imageGallery.schema";
+import { imageGallerySchemaResponse } from "../../schemas/imageGallery.schema";
 
-export const createImgAdvertService = async (
-  url: string,
-  userId: number,
-  advertId: number
-): Promise<TImageGalleryResponse> => {
+export const createImgAdvertService = async (url: string, userId: number, advertId: number): Promise<TImageGalleryResponse> => {
+
+
   const advertRepository = AppDataSource.getRepository(Adverts);
+
   const advert = await advertRepository.findOne({
-    where: { id: advertId, user: { id: userId } },
+    where: { id: advertId },
   });
 
   if (!advert) {
-    throw new Error("Advert not found");
+    throw new AppError("Advert not found", 404);
   }
-
   const imageGalleryRepository = AppDataSource.getRepository(ImageGallery);
-  const image = new ImageGallery();
-  image.image = url;
-  image.advert = advert;
 
-  const savedImage = await imageGalleryRepository.save(image);
-  const img = await imageGalleryRepository.findOne({
-    where: { id: savedImage.id },
-    relations: { advert: true },
-  });
-  console.log(img);
+  // const newImage = imageGalleryRepository.create({
+  //   image: url,
+  //   advert: advert,
+  // })
 
-  return imageGallerySchema.parse(img);
+  // await imageGalleryRepository.save(newImage);
+
+  // console.log(newImage);
+
+  const newImage2 = await imageGalleryRepository.findOne({
+    where: {
+      id: 1
+    }, relations: { adverts: true   }
+  })
+
+  console.log(newImage2);
+  
+  
+  return imageGallerySchemaResponse.parse(newImage2);
 };

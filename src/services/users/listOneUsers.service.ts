@@ -10,11 +10,12 @@ export const listOneUserService = async (userId: number): Promise<TUserResponse>
 
   console.log(userId);
 
-  const user = await userRepository.createQueryBuilder('Users')
-    .leftJoinAndSelect('Users.address', 'address')
+  const user = await userRepository
+    .createQueryBuilder('user')
+    .leftJoinAndSelect('user.address', 'address')
     .where('user.id = :id', { id: userId })
-    .getOne();
-
+    .getOne()
+  
   console.log(user);
 
   if (!user) {

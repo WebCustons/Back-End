@@ -7,20 +7,21 @@ import { userSchemaResponse } from "../../schemas/user.schema";
 export const createUserService = async (userData: TUserRequest): Promise<TUserResponse> => {
 
   const addressRepository = AppDataSource.getRepository(Address);
-  
+
   const userRepository = AppDataSource.getRepository(Users);
 
   const { address, type_user, ...userFields } = userData;
-  
+
   const newAddress = addressRepository.create(address);
-  
+
   const userType: UserType = type_user as UserType;
-  
+
   const newUser = userRepository.create({
     ...userFields,
     type_user: userType,
     address: newAddress
   });
+  console.log(newUser);
 
   await userRepository.save(newUser);
 

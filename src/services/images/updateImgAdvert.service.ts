@@ -5,14 +5,12 @@ import {
   TImageGalleryRequest,
   TImageGalleryResponse,
 } from "../../interfaces/imageGallery.interfaces";
-import { imageGallerySchema } from "../../schemas/imageGallery.schema";
+import { imageGallerySchemaResponse } from './../../schemas/imageGallery.schema';
 
-export const updateImgAdvertService = async (
-  id: number,
-  userId: number,
-  img: TImageGalleryRequest
-): Promise<TImageGalleryResponse> => {
+export const updateImgAdvertService = async (id: number, img: string): Promise<TImageGalleryResponse> => {
+
   const imageRepository = AppDataSource.getRepository(ImageGallery);
+
   const image = await imageRepository.findOne({
     where: { id: id },
   });
@@ -27,9 +25,9 @@ export const updateImgAdvertService = async (
 
   const newImage = await imageRepository.findOne({
     where: { id: id },
-    relations: { advert: true },
+    relations: { adverts: true },
   });
   console.log(newImage);
 
-  return imageGallerySchema.parse(newImage);
+  return imageGallerySchemaResponse.parse(newImage);
 };

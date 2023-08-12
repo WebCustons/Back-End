@@ -7,7 +7,11 @@ export const listUsersService = async (): Promise<TUserResponse[]> => {
 
   const UsersRepository = AppDataSource.getRepository(Users);
 
-  const allUsers = await UsersRepository.find();
+  const allUsers = await UsersRepository.createQueryBuilder('users')
+    .leftJoinAndSelect('users.address','address')
+    .getMany()
 
+  console.log(allUsers);
+  
   return allUsersSchema.parse(allUsers);
 };

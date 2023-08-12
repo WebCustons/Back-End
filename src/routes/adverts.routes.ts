@@ -4,33 +4,26 @@ import { listAdvertsController } from "../controllers/adverts/listAdverts.contro
 import { listOneAdvertsController } from "../controllers/adverts/listOneAdvert.controller";
 import { deleteAdvertsController } from "../controllers/adverts/deleteAdverts.controller";
 import { schemaValidator } from "../middlewares/schema.middlewares";
-import {
-  advertSchemaRequest,
-  advertSchemaRequestfilters,
-  advertSchemaRequestUpdate,
-} from "../schemas/advert.schema";
+import { advertSchemaRequest, advertSchemaRequestfilters, advertSchemaRequestUpdate, } from "../schemas/advert.schema";
 import { filteredAdvertsController } from "./../controllers/adverts/listfiltersAdverts.controller";
 import { updateAdvertsController } from "../controllers/adverts/updateAdverts.controller";
 import { createFiltersAdvertController } from "./../controllers/adverts/createFiltesAdvert.controller ";
-import {
-  verifyAuthToken,
-  isOwner,
-  isOwnerOrAdmin,
-} from "../middlewares/authorization.middleware";
-import { Adverts } from "../entities/adverts.entities";
+import { verifyAuthToken } from "../middlewares/authorization.middleware";
+import { advertsExistsbyId, isOwnerOrAdminAdverts } from "../middlewares/adverts.middlewares";
 
 export const advertsRoutes = Router();
 
 advertsRoutes.get("", listAdvertsController);
 
-advertsRoutes.get("/:id", listOneAdvertsController);
+advertsRoutes.get("/:id", advertsExistsbyId, listOneAdvertsController);
 
-advertsRoutes.post(  "",  verifyAuthToken,  schemaValidator(advertSchemaRequest),  createAdvertsController);
+advertsRoutes.post("", verifyAuthToken, schemaValidator(advertSchemaRequest), createAdvertsController);
 
-advertsRoutes.patch("/:id", verifyAuthToken, isOwner(Adverts), schemaValidator(advertSchemaRequestUpdate), updateAdvertsController);
+advertsRoutes.patch("/:id", verifyAuthToken, advertsExistsbyId, isOwnerOrAdminAdverts, schemaValidator(advertSchemaRequestUpdate), updateAdvertsController);
 
-advertsRoutes.delete("/:id", verifyAuthToken, isOwnerOrAdmin, deleteAdvertsController);
+advertsRoutes.delete("/:id", verifyAuthToken, advertsExistsbyId, isOwnerOrAdminAdverts, deleteAdvertsController);
 
-advertsRoutes.get(  "/adverts-filters",  schemaValidator(advertSchemaRequestfilters),  createFiltersAdvertController);
+advertsRoutes.get("/adverts-filters", schemaValidator(advertSchemaRequestfilters), createFiltersAdvertController);
 
 advertsRoutes.post("/filtered", filteredAdvertsController);
+

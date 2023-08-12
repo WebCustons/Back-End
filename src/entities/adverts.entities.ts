@@ -56,7 +56,7 @@ export class Adverts {
   @ManyToOne(() => Users, (user) => user.adverts)
   user: Users;
 
-  @OneToMany(() => ImageGallery, (gallery) => gallery.advert, {
+  @OneToMany(() => ImageGallery, (gallery) => gallery.adverts, {
     cascade: true,
     onDelete: "CASCADE",
   })

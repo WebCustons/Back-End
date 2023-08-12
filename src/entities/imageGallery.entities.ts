@@ -9,7 +9,7 @@ export class ImageGallery{
     @Column({type:'text'})
     image:string
 
-    @ManyToOne(()=>Adverts, adverts=>adverts.images)
-    advert:Adverts
+    @ManyToOne(() => Adverts, adverts => adverts.images )
+    adverts:Adverts
 
 }

@@ -17,6 +17,7 @@ export const listAdvertService = async (
 
   const [findAdvert, totalCount] = await advertRepository.createQueryBuilder('adverts')
     .leftJoinAndSelect('adverts.user', 'Users')
+    .leftJoinAndSelect('adverts.images', 'ImageGallery')
     .orderBy('adverts.id', 'ASC')
     .take(perPageReq)
     .skip(perPageReq * (pageReq - 1))

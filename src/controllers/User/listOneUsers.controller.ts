@@ -5,9 +5,9 @@ import { listOneUserService } from '../../services/users/listOneUsers.service';
 export const listOneUsersController = async (
   req: Request,
   res: Response
-): Promise<TUserResponse> => {
+): Promise<Response<TUserResponse>> => {
   
   const UserUser: TUserResponse = await listOneUserService(Number(req.params.id));
 
-  return UserUser;
+  return res.json(UserUser);
 };
