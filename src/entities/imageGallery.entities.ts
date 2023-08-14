@@ -6,10 +6,10 @@ export class ImageGallery{
     @PrimaryGeneratedColumn()
     id:number;
 
-    @Column({type:'text'})
-    image:string
+    @Column({ type: 'text' })
+    image: string;
 
-    @ManyToOne(()=>Adverts, adverts=>adverts.images)
-    advert:Adverts
+    @ManyToOne(() => Adverts, adverts => adverts.images )
+    adverts:Adverts
 
 }

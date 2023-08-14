@@ -25,8 +25,8 @@ export class Users{
     @Column({type:'varchar', length:14,  nullable:false, unique:true})
     cpf:string;
 
-    @Column({type:'int', nullable:false})
-    phone:number;
+    @Column({ type:'bigint', nullable:false})
+    phone:string;
 
     @Column({type:'date', nullable:false})
     birth_date:Date;
@@ -40,7 +40,8 @@ export class Users{
     @Column({type:'text', nullable:false})
     type_user:UserType;
 
-    @OneToOne(()=>Address, address=>address.user, {cascade:true, onDelete:'CASCADE'})
+    @OneToOne(() => Address, { cascade: true, onDelete: 'CASCADE' })
+    @JoinColumn()
     address:Address
 
     @OneToMany(() => Adverts, adverts => adverts.user, {cascade:true, onDelete:'CASCADE'})

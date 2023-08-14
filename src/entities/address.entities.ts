@@ -29,6 +29,5 @@ export class Address {
   @Column({ type: "text", nullable: false })
   complement: string;
 
-  @OneToOne(() => Users, (user) => user.address)
-  user: Users;
+
 }

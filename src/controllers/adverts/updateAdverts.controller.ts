@@ -13,11 +13,7 @@ export const updateAdvertsController = async (
 
   const userId = Number(res.locals.userId)
 
-  const updateAdverts: TAdvertResponse = await updateAdvertService(
-    Number(req.params.id),
-    userId,
-    advert
-  )
+  const updateAdverts: TAdvertResponse = await updateAdvertService(Number(req.params.id), userId, advert)
 
   return res.json(updateAdverts)
 }

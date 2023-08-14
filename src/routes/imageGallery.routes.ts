@@ -1,32 +1,15 @@
 import { Router } from "express";
-import { createImgAdvertController } from "../controllers/images/createImgAdvert.controller";
-import {
-  isOwner,
-  verifyAuthToken,
-} from "../middlewares/authorization.middleware";
+import { ImageGallery } from "../entities/imageGallery.entities";
+import { verifyAuthToken } from "../middlewares/authorization.middleware";
 import { schemaValidator } from "../middlewares/schema.middlewares";
 import { imageGallerySchemaRequest } from "../schemas/imageGallery.schema";
-import { updateImgAdvertController } from "../controllers/images/updateImgAdvert.controller";
 import { deleteImgAdvertController } from "../controllers/images/deleteImgAdvert.controller";
+import { updateImgAdvertController } from './../controllers/images/updateImgAdvert.controller';
+import { createImgAdvertController } from "../controllers/images/createImgAdvert.controller";
+import { isOwnerOrAdminAdverts } from './../middlewares/adverts.middlewares';
 
 export const imageGalleryRoutes = Router();
 
-imageGalleryRoutes.post(
-  "/:id",
-  verifyAuthToken,
-  schemaValidator(imageGallerySchemaRequest),
-  createImgAdvertController
-);
-imageGalleryRoutes.patch(
-  "/:id",
-  verifyAuthToken,
-  schemaValidator(imageGallerySchemaRequest),
-  //   isOwner,
-  updateImgAdvertController
-);
-imageGalleryRoutes.delete(
-  "/:id",
-  verifyAuthToken,
-  //  isOwner,
-  deleteImgAdvertController
-);
+imageGalleryRoutes.post("/:id", verifyAuthToken, isOwnerOrAdminAdverts, schemaValidator(imageGallerySchemaRequest), createImgAdvertController);
+imageGalleryRoutes.patch("/:id", verifyAuthToken, isOwnerOrAdminAdverts, schemaValidator(imageGallerySchemaRequest), updateImgAdvertController);
+imageGalleryRoutes.delete("/:id", verifyAuthToken, isOwnerOrAdminAdverts,  deleteImgAdvertController);
