@@ -13,7 +13,5 @@ export const listUsersService = async (): Promise<TUserResponse[]> => {
     }
   })
 
-  console.log(allUsers);
-
   return allUsersSchema.parse(allUsers);
 };

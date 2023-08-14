@@ -11,8 +11,8 @@ export class Address {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: "int", nullable: false })
-  cep: number;
+  @Column({ type: "text", nullable: false })
+  cep: string;
 
   @Column({ type: "text", nullable: false })
   state: string;
@@ -23,8 +23,8 @@ export class Address {
   @Column({ type: "text", nullable: false })
   road: string;
 
-  @Column({ type: "int", nullable: false })
-  number: number;
+  @Column({ type: "text", nullable: false })
+  number: string;
 
   @Column({ type: "text", nullable: false })
   complement: string;
