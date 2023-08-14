@@ -28,18 +28,18 @@ export const userSchema = z.object({
   address: addressSchema,
 })
 
-export const userSchemaRequest = userSchema
-  .omit({ id: true })
-  .extend({
-    address: addressSchema.omit({ id: true, user: true }),
-  });
+export const userSchemaRequest = userSchema.omit({ id: true }).extend({
+  address: addressSchema.omit({ id: true, user: true }),
+})
 
-export const userSchemaResponse = userSchema
-  .omit({ password: true })
-  .extend({
-    address: addressSchema.omit({ user:true}),
-  });
+export const userSchemaResponse = userSchema.omit({ password: true }).extend({
+  address: addressSchema.omit({ user: true }),
+})
 
-export const userSchemaRequestUpdate = userSchemaRequest.partial()
+export const userSchemaRequestUpdate = userSchemaRequest
+  .extend({
+    address: addressSchema.omit({ id: true, user: true }).partial(),
+  })
+  .partial()
 
 export const allUsersSchema = userSchemaResponse.array()
