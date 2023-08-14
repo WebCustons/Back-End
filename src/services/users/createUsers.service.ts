@@ -6,13 +6,15 @@ import { userSchemaResponse } from "../../schemas/user.schema";
 
 export const createUserService = async (userData: TUserRequest): Promise<TUserResponse> => {
 
+
+  const { address, type_user, ...userFields } = userData;
+
   const addressRepository = AppDataSource.getRepository(Address);
 
   const userRepository = AppDataSource.getRepository(Users);
 
-  const { address, type_user, ...userFields } = userData;
-
   const newAddress = addressRepository.create(address);
+  await addressRepository.save(newAddress)
 
   const userType: UserType = type_user as UserType;
 
@@ -21,8 +23,6 @@ export const createUserService = async (userData: TUserRequest): Promise<TUserRe
     type_user: userType,
     address: newAddress
   });
-  
-  
 
   await userRepository.save(newUser);
 
