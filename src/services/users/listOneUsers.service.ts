@@ -8,8 +8,6 @@ export const listOneUserService = async (userId: number): Promise<TUserResponse>
 
   const userRepository: Repository<Users> = AppDataSource.getRepository(Users);
 
-  console.log(userId);
-
   const user = await userRepository
     .createQueryBuilder('user')
     .leftJoinAndSelect('user.address', 'address')

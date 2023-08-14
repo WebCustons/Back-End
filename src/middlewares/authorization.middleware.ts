@@ -4,7 +4,6 @@ import "dotenv/config"
 import { AppError } from "../errors"
 import { AppDataSource } from "../data-source"
 import { Users } from "../entities/users.entities"
-import { ImageGallery } from './../entities/imageGallery.entities';
 
 export const verifyAuthToken = async (req: Request, res: Response, next: NextFunction) => {
     const token: string | undefined = req.headers.authorization
@@ -33,9 +32,9 @@ export const isAdmin = async (
     next: NextFunction
 ) => {
     const userId = res.locals.userId
-
+    
     const repository = AppDataSource.getRepository(Users)
-
+    
     const user = await repository.findOne({
         where: { id: userId }
     });
