@@ -5,8 +5,6 @@ import { updateImgAdvertService } from "../../services/images/updateImgAdvert.se
 export const updateImgAdvertController = async (req: Request, res: Response): Promise<Response<TImageGalleryResponse>> => {
   const {image}: TImageGalleryRequest = req.body;
 
-  const userId = Number(res.locals.userId);
-
   const updatedImg: TImageGalleryResponse = await updateImgAdvertService(
     Number(req.params.id),
     image

@@ -1,7 +1,7 @@
 import { z } from "zod"
 import { FuelType } from "../entities/adverts.entities"
+import { imageGallerySchemaAdvert } from "./imageGallery.schema"
 import { userSchema } from "./user.schema"
-import { imageGallerySchemaAdvert } from './imageGallery.schema';
 
 export const advertSchema = z.object({
   id: z.number(),

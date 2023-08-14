@@ -1,17 +1,27 @@
 import { z } from "zod";
-import { advertSchema, advertSchemaGallery, advertSchemaRequest, advertSchemaResponse } from "./advert.schema";
+import { FuelType } from "../entities/adverts.entities";
 
 export const imageGallerySchema = z.object({
   id: z.number(),
   image: z.string(),
-  adverts: advertSchema.omit({ images: true, user: true }),
+  adverts: z.object({
+    id: z.number(),
+    brand: z.string(),
+    model: z.string(),
+    year: z.number().int().positive(),
+    fuel: z.enum([FuelType.GASOLINA, FuelType.ETANOL]),
+    mileage: z.number().int().positive(),
+    color: z.string(),
+    table_fipe: z.boolean(),
+    price: z.number().positive(),
+    description: z.string(),
+    cover_image: z.string(),
+    published: z.boolean(),
+  })
 });
 
 export const imageGallerySchemaRequest = imageGallerySchema.omit({ id: true, adverts: true });
 
 export const imageGallerySchemaResponse = imageGallerySchema
 
-export const imageGallerySchemaAdvert = z.object({
-  id: z.number(),
-  image: z.string(),
-});
+export const imageGallerySchemaAdvert = imageGallerySchema.omit({ adverts: true })

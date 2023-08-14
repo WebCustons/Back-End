@@ -7,27 +7,18 @@ import {
 } from "../../interfaces/imageGallery.interfaces";
 import { imageGallerySchemaResponse } from './../../schemas/imageGallery.schema';
 
-export const updateImgAdvertService = async (id: number, img: string): Promise<TImageGalleryResponse> => {
+export const updateImgAdvertService = async (idImg: number, img: string): Promise<TImageGalleryResponse> => {
+
 
   const imageRepository = AppDataSource.getRepository(ImageGallery);
 
-  const image = await imageRepository.findOne({
-    where: { id: id },
-  });
+  const image = await imageRepository.findOneOrFail({ where: { id: idImg }, relations: { adverts: true } });
 
-  if (!image) {
-    throw new Error("Image not found");
-  }
+  image.image = img;
 
-  const updatedImage = Object.assign(image, img);
+  const updatedImage = await imageRepository.save(image);
 
-  await imageRepository.save(updatedImage);
 
-  const newImage = await imageRepository.findOne({
-    where: { id: id },
-    relations: { adverts: true },
-  });
-  console.log(newImage);
+  return imageGallerySchemaResponse.parse(updatedImage);
 
-  return imageGallerySchemaResponse.parse(newImage);
 };

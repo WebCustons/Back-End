@@ -2,9 +2,7 @@ import { AppDataSource } from "../../data-source";
 import { Adverts } from "../../entities/adverts.entities";
 import { ImageGallery } from "../../entities/imageGallery.entities";
 import { AppError } from "../../errors";
-import { TImageGalleryResponse } from "../../interfaces/imageGallery.interfaces";
-import { advertSchemaGallery, advertSchemaRequest } from "../../schemas/advert.schema";
-import { imageGallerySchema, imageGallerySchemaAdvert, imageGallerySchemaResponse } from "../../schemas/imageGallery.schema";
+import { imageGallerySchema } from "../../schemas/imageGallery.schema";
 
 export const createImgAdvertService = async (url: string, advertId: number): Promise<any> => {
 
@@ -26,14 +24,5 @@ export const createImgAdvertService = async (url: string, advertId: number): Pro
 
   await imageGalleryRepository.save(newImage);
 
-  const image =await imageGalleryRepository.findOne({
-    where: { id: newImage.id },
-    relations: { adverts: true }
-  })
-
-
-  console.log(image)
-
-
-  return imageGallerySchemaResponse.parse(image);
+  return imageGallerySchema.parse(newImage);
 };
