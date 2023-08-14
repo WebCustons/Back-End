@@ -14,8 +14,7 @@ export const listOneUserService = async (userId: number): Promise<TUserResponse>
     .where('user.id = :id', { id: userId })
     .getOne()
   
-  console.log(user);
-
+  
   if (!user) {
     throw new Error("user not found");
   }
