@@ -7,10 +7,9 @@ export const createImgAdvertController = async (
   res: Response
 ): Promise<Response<TImageGalleryResponse>> => {
   const { image } = req.body;
-  const userId = Number(res.locals.userId);
   const advertId = Number(req.params.id);
 
-  const newImg = await createImgAdvertService(image, userId, advertId);
+  const newImg = await createImgAdvertService(image, advertId);
 
   return res.json(newImg);
 };

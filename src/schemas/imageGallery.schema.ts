@@ -1,16 +1,14 @@
 import { z } from "zod";
-import { advertSchemaResponse } from "./advert.schema";
+import { advertSchema, advertSchemaGallery, advertSchemaRequest, advertSchemaResponse } from "./advert.schema";
 
 export const imageGallerySchema = z.object({
   id: z.number(),
   image: z.string(),
-  advert: advertSchemaResponse,
+  adverts: advertSchema.omit({ images: true, user: true }),
 });
 
-export const imageGallerySchemaRequest = imageGallerySchema.omit({
-  id: true,
-  advert: true,
-});
+export const imageGallerySchemaRequest = imageGallerySchema.omit({ id: true, adverts: true });
+
 export const imageGallerySchemaResponse = imageGallerySchema
 
 export const imageGallerySchemaAdvert = z.object({

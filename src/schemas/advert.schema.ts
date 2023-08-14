@@ -28,4 +28,8 @@ export const advertSchemaRequestfilters = advertSchemaRequest.omit({ description
 
 export const advertSchemaResponse = advertSchema.partial({ images: true })
 
+export const advertSchemaGallery = advertSchema.omit({ images: true, user: true })
+
 export const allAdvertSchema = advertSchema.array()
+
+

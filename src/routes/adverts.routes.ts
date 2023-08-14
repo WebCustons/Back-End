@@ -13,11 +13,11 @@ import { advertsExistsbyId, isOwnerOrAdminAdverts } from "../middlewares/adverts
 
 export const advertsRoutes = Router();
 
-advertsRoutes.get("", listAdvertsController);
+advertsRoutes.get("/", listAdvertsController);
 
 advertsRoutes.get("/:id", advertsExistsbyId, listOneAdvertsController);
 
-advertsRoutes.post("", verifyAuthToken, schemaValidator(advertSchemaRequest), createAdvertsController);
+advertsRoutes.post("/", verifyAuthToken, schemaValidator(advertSchemaRequest), createAdvertsController);
 
 advertsRoutes.patch("/:id", verifyAuthToken, advertsExistsbyId, isOwnerOrAdminAdverts, schemaValidator(advertSchemaRequestUpdate), updateAdvertsController);
 
