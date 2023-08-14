@@ -9,7 +9,7 @@ export class ImageGallery{
     @Column({ type: 'text' })
     image: string;
 
-    @ManyToOne(() => Adverts, adverts => adverts.images )
+    @ManyToOne(() => Adverts, adverts => adverts.images, { onDelete: "CASCADE" })
     adverts:Adverts
 
 }

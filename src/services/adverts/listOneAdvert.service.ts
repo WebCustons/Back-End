@@ -20,7 +20,6 @@ export const listOneAdvertService = async (
     throw new Error("Advert not found");
   }
 
-  console.log(advert);
   
   return advertSchemaResponse.parse(advert);
 };

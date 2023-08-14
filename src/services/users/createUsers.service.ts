@@ -21,7 +21,8 @@ export const createUserService = async (userData: TUserRequest): Promise<TUserRe
     type_user: userType,
     address: newAddress
   });
-  console.log(newUser);
+  
+  
 
   await userRepository.save(newUser);
 

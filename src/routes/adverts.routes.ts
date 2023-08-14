@@ -13,6 +13,8 @@ import { advertsExistsbyId, isOwnerOrAdminAdverts } from "../middlewares/adverts
 
 export const advertsRoutes = Router();
 
+advertsRoutes.get("/adverts-filters", schemaValidator(advertSchemaRequestfilters), createFiltersAdvertController);
+
 advertsRoutes.get("/", listAdvertsController);
 
 advertsRoutes.get("/:id", advertsExistsbyId, listOneAdvertsController);
@@ -23,7 +25,6 @@ advertsRoutes.patch("/:id", verifyAuthToken, advertsExistsbyId, isOwnerOrAdminAd
 
 advertsRoutes.delete("/:id", verifyAuthToken, advertsExistsbyId, isOwnerOrAdminAdverts, deleteAdvertsController);
 
-advertsRoutes.get("/adverts-filters", schemaValidator(advertSchemaRequestfilters), createFiltersAdvertController);
 
 advertsRoutes.post("/filtered", filteredAdvertsController);
 
