@@ -21,32 +21,8 @@ import {
 
 export const userRoutes = Router()
 
-userRoutes.post(
-  "/",
-  schemaValidator(userSchemaRequest),
-  userExistsCreate,
-  createUsersController
-)
+userRoutes.post("/", schemaValidator(userSchemaRequest), userExistsCreate, createUsersController)
 userRoutes.get("/all", verifyAuthToken, isAdmin, listAllUsersController)
-userRoutes.get(
-  "/:id",
-  verifyAuthToken,
-  userExistsbyId,
-  isOwnerOrAdminUser,
-  listOneUsersController
-)
-userRoutes.patch(
-  "/",
-  verifyAuthToken,
-  userExistsbyId,
-  schemaValidator(userSchemaRequestUpdate),
-  userExistsCreate,
-  updateUserController
-)
-userRoutes.delete(
-  "/:id",
-  verifyAuthToken,
-  userExistsbyId,
-  isOwnerOrAdminUser,
-  deleteUserController
-)
+userRoutes.get("/:id", verifyAuthToken, userExistsbyId, isOwnerOrAdminUser, listOneUsersController)
+userRoutes.patch("/", verifyAuthToken, userExistsbyId, schemaValidator(userSchemaRequestUpdate), userExistsCreate, updateUserController)
+userRoutes.delete("/:id", verifyAuthToken, userExistsbyId, isOwnerOrAdminUser, deleteUserController)
