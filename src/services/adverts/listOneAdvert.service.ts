@@ -11,15 +11,10 @@ export const listOneAdvertService = async (
 
 
 
-  const advert = await advertRepository.findOne({
+  const advert = await advertRepository.findOneOrFail({
     where: { id: advertId },
-    relations: { user: true, images: true, comments: true }
+    relations: { user:true, images: true, comments: {user:true} }
   });
-
-  if (!advert) {
-    throw new Error("Advert not found");
-  }
-
-  
+  console.log(advert);
   return advertSchemaResponse.parse(advert);
 };

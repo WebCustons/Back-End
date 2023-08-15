@@ -2,7 +2,7 @@ import { AppDataSource } from "../../data-source";
 import { Adverts } from "../../entities/adverts.entities";
 import { Repository } from 'typeorm';
 import { IPagination } from "../../interfaces/pagina.interface";
-import { allAdvertSchema } from './../../schemas/advert.schema';
+import { advertSchemaResponse, allAdvertSchema } from './../../schemas/advert.schema';
 
 export const listAdvertService = async (
   pageReq: number,
@@ -17,7 +17,6 @@ export const listAdvertService = async (
 
   const [findAdvert, totalCount] = await advertRepository.createQueryBuilder('adverts')
     .leftJoinAndSelect('adverts.user', 'Users')
-    .leftJoinAndSelect('adverts.images', 'ImageGallery')
     .orderBy('adverts.id', 'ASC')
     .take(perPageReq)
     .skip(perPageReq * (pageReq - 1))
@@ -29,8 +28,10 @@ export const listAdvertService = async (
     take: perPageReq,
     skip: perPageReq * pageReq
   });
-
+  
   const parsedAdverts = allAdvertSchema.parse(findAdvert);
+  
+  
 
   const pagination = {
     prevPage,
