@@ -18,6 +18,7 @@ import {
   isAdmin,
   verifyAuthToken,
 } from "../middlewares/authorization.middleware"
+import { listAllUserAdvertsController } from "../controllers/User/listAllUserAdverts.controller"
 
 export const userRoutes = Router()
 
@@ -26,3 +27,4 @@ userRoutes.get("/all", verifyAuthToken, isAdmin, listAllUsersController)
 userRoutes.get("/:id", verifyAuthToken, userExistsbyId, isOwnerOrAdminUser, listOneUsersController)
 userRoutes.patch("/", verifyAuthToken, userExistsbyId, schemaValidator(userSchemaRequestUpdate), userExistsCreate, updateUserController)
 userRoutes.delete("/:id", verifyAuthToken, userExistsbyId, isOwnerOrAdminUser, deleteUserController)
+userRoutes.get("/:id/adverts", userExistsbyId,listAllUserAdvertsController)
