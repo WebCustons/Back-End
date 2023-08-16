@@ -18,6 +18,8 @@ export const listfiltersAdvertsService = async (
 
   const { brand, color, fuel, model, year, price, mileage } = where;
 
+  console.log(brand);
+  
   const allAdvertsFilters = await advertRepository.find({
     take: perPageReq,
     skip: perPageReq * (pageReq - 1),
@@ -34,8 +36,7 @@ export const listfiltersAdvertsService = async (
       ...(mileage !== undefined && !isNaN(mileage) && { mileage:LessThanOrEqual(mileage) }),
     },
     relations: {
-      user: true,
-      images:true
+      user: true
     }
   });
 
@@ -58,6 +59,8 @@ export const listfiltersAdvertsService = async (
     skip: perPageReq * pageReq
   });
 
+  console.log(allAdvertsFilters);
+  
   const parsedAdverts = allAdvertSchema.parse(allAdvertsFilters);
 
   const pagination = {

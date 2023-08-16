@@ -4,7 +4,7 @@ import { listAdvertsController } from "../controllers/adverts/listAdverts.contro
 import { listOneAdvertsController } from "../controllers/adverts/listOneAdvert.controller";
 import { deleteAdvertsController } from "../controllers/adverts/deleteAdverts.controller";
 import { schemaValidator } from "../middlewares/schema.middlewares";
-import { advertSchemaRequest, advertSchemaRequestfilters, advertSchemaRequestUpdate, } from "../schemas/advert.schema";
+import { advertSchemaRequest,  advertSchemaRequestUpdate, } from "../schemas/advert.schema";
 import { filteredAdvertsController } from "./../controllers/adverts/listfiltersAdverts.controller";
 import { updateAdvertsController } from "../controllers/adverts/updateAdverts.controller";
 import { createFiltersAdvertController } from "./../controllers/adverts/createFiltesAdvert.controller ";
@@ -13,7 +13,9 @@ import { advertsExistsbyId, isOwnerOrAdminAdverts } from "../middlewares/adverts
 
 export const advertsRoutes = Router();
 
-advertsRoutes.get("/adverts-filters", schemaValidator(advertSchemaRequestfilters), createFiltersAdvertController);
+advertsRoutes.get("/adverts-filters", createFiltersAdvertController);
+
+advertsRoutes.get("/filtered", filteredAdvertsController);
 
 advertsRoutes.get("/", listAdvertsController);
 
@@ -26,5 +28,4 @@ advertsRoutes.patch("/:id", verifyAuthToken, advertsExistsbyId, isOwnerOrAdminAd
 advertsRoutes.delete("/:id", verifyAuthToken, advertsExistsbyId, isOwnerOrAdminAdverts, deleteAdvertsController);
 
 
-advertsRoutes.post("/filtered", filteredAdvertsController);
 
