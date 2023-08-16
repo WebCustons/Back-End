@@ -1,3 +1,4 @@
+import { LessThan, LessThanOrEqual } from "typeorm";
 import { AppDataSource } from "../../data-source";
 import { Adverts, FuelType } from "../../entities/adverts.entities";
 import { TAdvertRequestUpdate } from "../../interfaces/advert.interfaces";
@@ -29,8 +30,8 @@ export const listfiltersAdvertsService = async (
       ...(fuel && { fuel: fuel as FuelType }),
       ...(model && { model }),
       ...(year !== undefined && !isNaN(year) && { year }),
-      ...(price !== undefined && !isNaN(price) && { price }),
-      ...(mileage !== undefined && !isNaN(mileage) && { mileage }),
+      ...(price !== undefined && !isNaN(price) && { price:LessThanOrEqual(price)}),
+      ...(mileage !== undefined && !isNaN(mileage) && { mileage:LessThanOrEqual(mileage) }),
     },
     relations: {
       user: true,
