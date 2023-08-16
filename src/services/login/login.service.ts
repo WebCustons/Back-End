@@ -4,9 +4,9 @@ import "dotenv/config"
 import { AppDataSource } from "../../data-source"
 import { Users } from "../../entities/users.entities"
 import { AppError } from "../../errors"
-import { TLogin } from "../../interfaces/login.interfaces"
+import { TLogin, loginResponse } from "../../interfaces/login.interfaces"
 
-const loginService = async (userData: TLogin): Promise<{ token: string }> => {
+const loginService = async (userData: TLogin): Promise<loginResponse> => {
   const userRepository = AppDataSource.getRepository(Users)
 
   const userResponse = await userRepository.findOneBy({ email: userData.email })
@@ -30,7 +30,12 @@ const loginService = async (userData: TLogin): Promise<{ token: string }> => {
     { expiresIn: "1d" }
   )
 
-  return { token }
+  const response: loginResponse = {
+    token: token,
+    id: userResponse.id,
+  }
+
+  return response
 }
 
 export default loginService
