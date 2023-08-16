@@ -51,4 +51,4 @@ export const advertSchemaGallery = advertSchema.omit({
   user: true,
 });
 
-export const allAdvertSchema = advertSchema.array();
+export const allAdvertSchema = advertSchemaResponse.array();

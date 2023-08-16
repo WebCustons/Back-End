@@ -24,8 +24,6 @@ export const updateUserService = async (
     throw new Error("User not found")
   }
 
-  console.log(user)
-
   if (userData.address) {
     const addressRepository = AppDataSource.getRepository(Address)
     const address = await addressRepository.findOneByOrFail({
