@@ -1,4 +1,4 @@
-import { z } from "zod"
+import { string, z } from "zod"
 import { userSchema } from "./user.schema"
 
 export const commentSchema = z.object({
@@ -17,9 +17,5 @@ export const commentSchemaResponse = commentSchema.omit({
   })
 })
 
-export const commentSchemaRequest = commentSchema.omit({
-  id: true,
-  user_id: true,
-  advert_id: true,
-  create_at: true,
-})
+export const commentSchemaRequest = commentSchema.pick({comment:true});
+

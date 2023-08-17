@@ -45,3 +45,21 @@ export const isAdmin = async (
 
     return next()
 }
+
+
+export const notIsAdmin = async(req: Request,res: Response,next: NextFunction)=>{
+
+    const userId = res.locals.userId
+    
+    const repository = AppDataSource.getRepository(Users)
+    
+    const user = await repository.findOne({
+        where: { id: userId }
+    });
+
+    if (user?.type_user == 'admin') {
+        throw new AppError(`Admins cannot access this route`, 401)
+    }
+
+    return next()
+}

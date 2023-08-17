@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { commentSchema, commentSchemaRequest } from "../schemas/comment.schema"
+import { commentSchema, commentSchemaRequest} from "../schemas/comment.schema"
 
 export type TComment = z.infer<typeof commentSchema>
 
