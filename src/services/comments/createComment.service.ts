@@ -11,7 +11,7 @@ export const createCommentsService = async(userId:number,advertId:number,comment
         user:{id:Number(userId)},
         advert:{id:advertId}
     });
-
+    
     await commentRepository.save(newComments);
 
     const {id,comment,created_at,} = newComments;
