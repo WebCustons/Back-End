@@ -7,6 +7,7 @@ export const listAllUsersController = async (
   res: Response
 ): Promise<Response<TUserResponse[]>> => {
 
+  
   const Users: TUserResponse[] = await listUsersService();
 
   return res.json(Users);

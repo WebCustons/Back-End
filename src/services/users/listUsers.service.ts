@@ -7,7 +7,7 @@ export const listUsersService = async (): Promise<TUserResponse[]> => {
 
   const UsersRepository = AppDataSource.getRepository(Users);
 
-  const allUsers = await UsersRepository.findOneOrFail({
+  const allUsers = await UsersRepository.find({
     relations: {
       address:true
     }
