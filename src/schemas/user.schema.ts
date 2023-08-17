@@ -36,9 +36,11 @@ export const userSchemaRequest = userSchema.omit({ id: true }).extend({
   address: addressSchema.omit({ id: true, user: true }),
 });
 
-export const userSchemaResponse = userSchema.omit({ password: true }).extend({
-  address: addressSchema.omit({ user: true }),
-});
+export const userSchemaResponse = userSchema
+  .omit({ password: true, cpf: true })
+  .extend({
+    address: addressSchema.omit({ user: true }),
+  });
 
 export const userSchemaRequestUpdate = userSchemaRequest
   .extend({
@@ -47,7 +49,6 @@ export const userSchemaRequestUpdate = userSchemaRequest
   .partial();
 
 export const allUsersSchema = userSchemaResponse.array();
-
 
 const advertsEssentials = z.object({
   id: z.number(),
@@ -62,6 +63,8 @@ const advertsEssentials = z.object({
   description: z.string(),
   cover_image: z.string(),
   published: z.boolean(),
-})
+});
 
-export const userAdvertsSchema = userSchema.omit({address:true, password:true}).extend({adverts: advertsEssentials.array()})
+export const userAdvertsSchema = userSchema
+  .omit({ address: true, password: true })
+  .extend({ adverts: advertsEssentials.array() });
