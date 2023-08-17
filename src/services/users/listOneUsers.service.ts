@@ -12,12 +12,7 @@ export const listOneUserService = async (userId: number): Promise<TUserResponse>
     .createQueryBuilder('user')
     .leftJoinAndSelect('user.address', 'address')
     .where('user.id = :id', { id: userId })
-    .getOne()
-  
-  
-  if (!user) {
-    throw new Error("user not found");
-  }
+    .getOneOrFail()
 
   return userSchemaResponse.parse(user);
 };
