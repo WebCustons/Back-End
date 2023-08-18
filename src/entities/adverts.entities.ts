@@ -11,8 +11,9 @@ import { ImageGallery } from "./imageGallery.entities";
 import { Comments } from "./comments.entities";
 
 export enum FuelType {
-  GASOLINA = "gasolina",
-  ETANOL = "etanol",
+  FLEX = "flex",
+  HIBRIDO = "hibrido",
+  ELETRICO = "eletrico"
 }
 
 @Entity()

@@ -55,7 +55,7 @@ const advertsEssentials = z.object({
   brand: z.string(),
   model: z.string(),
   year: z.number().int().positive(),
-  fuel: z.enum([FuelType.GASOLINA, FuelType.ETANOL]),
+  fuel: z.enum([FuelType.FLEX, FuelType.HIBRIDO, FuelType.ELETRICO]),
   mileage: z.number().int().positive(),
   color: z.string(),
   table_fipe: z.boolean(),
