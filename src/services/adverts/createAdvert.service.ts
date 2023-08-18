@@ -33,7 +33,7 @@ export const createAdvertService = async (
 
   if (images) {
     const imageGalleryRepository = AppDataSource.getRepository(ImageGallery);
-    const imagesMap = await images.map(async (item) => {
+    const imagesMap = images.map(async (item) => {
       const newImage = imageGalleryRepository.create({
         image: item.image,
         adverts: newAdvert,
@@ -41,7 +41,7 @@ export const createAdvertService = async (
 
       await imageGalleryRepository.save(newImage);
       await newImages.push(imageGallerySchema.parse(newImage));
-      return await imageGallerySchema.parse(newImage);
+      return imageGallerySchema.parse(newImage);
     });
     await Promise.all(imagesMap);
   }
