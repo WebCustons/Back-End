@@ -1,73 +1,51 @@
-import { LessThan, LessThanOrEqual } from "typeorm";
+import { MoreThanOrEqual, LessThanOrEqual } from "typeorm";
 import { AppDataSource } from "../../data-source";
 import { Adverts, FuelType } from "../../entities/adverts.entities";
-import { TAdvertRequestUpdate } from "../../interfaces/advert.interfaces";
 import { allAdvertSchema } from "../../schemas/advert.schema";
-import { IPagination } from './../../interfaces/pagina.interface';
+import { IPagination } from "./../../interfaces/pagina.interface";
 
-export const listfiltersAdvertsService = async (
-  pageReq: number,
-  perPageReq: number,
-  serverUrl: string,
-  where: TAdvertRequestUpdate
-): Promise<IPagination> => {
+export const listfiltersAdvertsService = async (pageReq: number, perPageReq: number, serverUrl: string, where: any): Promise<IPagination> => {
   const advertRepository = AppDataSource.getRepository(Adverts);
 
   const prevPage: string | null = pageReq - 1 < 1 ? null : `${serverUrl}/adverts/?page=${pageReq - 1}&perPage=${perPageReq}`;
+
   const nextPage: string | null = `${serverUrl}/adverts/?page=${pageReq + 1}&perPage=${perPageReq}`;
 
-  const { brand, color, fuel, model, year, price, mileage } = where;
+  const { brand, color, fuel, model, minYear, maxYear, minPrice, maxPrice, minMileage, maxMileage } = where;
 
-  console.log(brand);
-  
-  const allAdvertsFilters = await advertRepository.find({
-    take: perPageReq,
-    skip: perPageReq * (pageReq - 1),
-    order:{
-      id:'ASC'
-    },
-    where: {
-      ...(brand && { brand }),
-      ...(color && { color }),
-      ...(fuel && { fuel: fuel as FuelType }),
-      ...(model && { model }),
-      ...(year !== undefined && !isNaN(year) && { year }),
-      ...(price !== undefined && !isNaN(price) && { price:LessThanOrEqual(price)}),
-      ...(mileage !== undefined && !isNaN(mileage) && { mileage:LessThanOrEqual(mileage) }),
-    },
-    relations: {
-      user: true
-    }
-  });
+  const [allAdvertsFilters, totalCount] = await advertRepository
+    .createQueryBuilder("adverts")
+    .take(perPageReq)
+    .skip(perPageReq * (pageReq - 1))
+    .leftJoinAndSelect('adverts.user', 'Users')
+    .where("1=1")
+    .andWhere(brand ? "adverts.brand = :brand" : "1=1", { brand: brand })
+    .andWhere(color ? "adverts.color = :color" : "1=1", { color: color })
+    .andWhere(fuel ? "adverts.fuel = :fuel" : "1=1", { fuel: fuel as FuelType })
+    .andWhere(model ? "adverts.model = :model" : "1=1", { model: model })
+    .andWhere(minYear !== undefined ? "adverts.year >= :minYear" : "1=1", { minYear: minYear })
+    .andWhere(maxYear !== undefined ? "adverts.year <= :maxYear" : "1=1", { maxYear: maxYear })
+    .andWhere(minPrice !== undefined ? "adverts.price >= :minPrice" : "1=1", { minPrice: minPrice })
+    .andWhere(maxPrice !== undefined ? "adverts.price <= :maxPrice" : "1=1", { maxPrice: maxPrice })
+    .andWhere(minMileage !== undefined ? "adverts.mileage >= :minMileage" : "1=1", { minMileage: minMileage })
+    .andWhere(maxMileage !== undefined ? "adverts.mileage <= :maxMileage" : "1=1", { maxMileage: maxMileage })
+    .getManyAndCount();
 
-  const totalCount = await advertRepository.count({
-    where: {
-      ...(brand && { brand }),
-      ...(color && { color }),
-      ...(fuel && { fuel: fuel as FuelType }),
-      ...(model && { model }),
-      ...(year !== undefined && !isNaN(year) && { year }),
-      ...(price !== undefined && !isNaN(price) && { price }),
-      ...(mileage !== undefined && !isNaN(mileage) && { mileage }),
-    }
-  });
 
   const totalPages = Math.ceil(totalCount / perPageReq);
 
   const nextAdverts = await advertRepository.find({
     take: perPageReq,
-    skip: perPageReq * pageReq
+    skip: perPageReq * pageReq,
   });
 
-  console.log(allAdvertsFilters);
-  
   const parsedAdverts = allAdvertSchema.parse(allAdvertsFilters);
 
   const pagination = {
     prevPage,
     nextPage: nextAdverts.length > 0 ? nextPage : null,
     totalPages,
-    data: parsedAdverts
+    data: parsedAdverts,
   };
 
   return pagination;
