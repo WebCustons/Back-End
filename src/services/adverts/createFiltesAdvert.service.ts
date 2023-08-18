@@ -1,9 +1,8 @@
 import { AppDataSource } from "../../data-source";
 import { Adverts, FuelType } from "../../entities/adverts.entities";
 import { Repository } from 'typeorm';
-import { TAdvertRequestUpdate } from "../../interfaces/advert.interfaces";
 
-export const createFiltersAdvertService = async (where: TAdvertRequestUpdate): Promise<any> => {
+export const createFiltersAdvertService = async (where: any): Promise<any> => {
   const advertRepository: Repository<Adverts> = AppDataSource.getRepository(Adverts);
 
   const distinctColumns = ["brand", "model", "fuel", "color"];
@@ -11,11 +10,8 @@ export const createFiltersAdvertService = async (where: TAdvertRequestUpdate): P
   const priceColumn = "price";
   const mileageColumn = "mileage";
 
+  const { brand, color, fuel, model, minYear, maxYear, minPrice, maxPrice, minMileage, maxMileage } = where;
 
-  const { brand, color, fuel, model, year, price, mileage } = where;
-
-  console.log(brand);
-  
   const distinctPromises = distinctColumns.map(column =>
     advertRepository.createQueryBuilder("adverts")
       .select(`DISTINCT(Adverts.${column})`, column)
@@ -23,9 +19,12 @@ export const createFiltersAdvertService = async (where: TAdvertRequestUpdate): P
       .andWhere(color ? "adverts.color = :color" : "1=1", { color })
       .andWhere(fuel ? "adverts.fuel = :fuel" : "1=1", { fuel: fuel as FuelType })
       .andWhere(model ? "adverts.model = :model" : "1=1", { model })
-      .andWhere(year !== undefined ? "adverts.year = :year" : "1=1", { year })
-      .andWhere(price !== undefined ? "adverts.price <= :price" : "1=1", { price })
-      .andWhere(mileage !== undefined ? "adverts.mileage <= :mileage" : "1=1", { mileage })
+      .andWhere(minYear !== undefined ? "adverts.year >= :minYear" : "1=1", { minYear })
+      .andWhere(maxYear !== undefined ? "adverts.year <= :maxYear" : "1=1", { maxYear })
+      .andWhere(minPrice !== undefined ? "adverts.price >= :minPrice" : "1=1", { minPrice })
+      .andWhere(maxPrice !== undefined ? "adverts.price <= :maxPrice" : "1=1", { maxPrice })
+      .andWhere(minMileage !== undefined ? "adverts.mileage >= :minMileage" : "1=1", { minMileage })
+      .andWhere(maxMileage !== undefined ? "adverts.mileage <= :maxMileage" : "1=1", { maxMileage })
       .getRawMany()
 
   );
@@ -36,9 +35,12 @@ export const createFiltersAdvertService = async (where: TAdvertRequestUpdate): P
     .andWhere(color ? "adverts.color = :color" : "1=1", { color })
     .andWhere(fuel ? "adverts.fuel = :fuel" : "1=1", { fuel: fuel as FuelType })
     .andWhere(model ? "adverts.model = :model" : "1=1", { model })
-    .andWhere(year !== undefined ? "adverts.year = :year" : "1=1", { year })
-    .andWhere(price !== undefined ? "adverts.price <= :price" : "1=1", { price })
-    .andWhere(mileage !== undefined ? "adverts.mileage <= :mileage" : "1=1", { mileage })
+    .andWhere(minYear !== undefined ? "adverts.year >= :minYear" : "1=1", { minYear })
+    .andWhere(maxYear !== undefined ? "adverts.year <= :maxYear" : "1=1", { maxYear })
+    .andWhere(minPrice !== undefined ? "adverts.price >= :minPrice" : "1=1", { minPrice })
+    .andWhere(maxPrice !== undefined ? "adverts.price <= :maxPrice" : "1=1", { maxPrice })
+    .andWhere(minMileage !== undefined ? "adverts.mileage >= :minMileage" : "1=1", { minMileage })
+    .andWhere(maxMileage !== undefined ? "adverts.mileage <= :maxMileage" : "1=1", { maxMileage })
     .getRawOne();
 
   const priceRange = await advertRepository.createQueryBuilder("adverts")
@@ -47,9 +49,12 @@ export const createFiltersAdvertService = async (where: TAdvertRequestUpdate): P
     .andWhere(color ? "adverts.color = :color" : "1=1", { color })
     .andWhere(fuel ? "adverts.fuel = :fuel" : "1=1", { fuel: fuel as FuelType })
     .andWhere(model ? "adverts.model = :model" : "1=1", { model })
-    .andWhere(year !== undefined ? "adverts.year = :year" : "1=1", { year })
-    .andWhere(price !== undefined ? "adverts.price <= :price" : "1=1", { price })
-    .andWhere(mileage !== undefined ? "adverts.mileage <= :mileage" : "1=1", { mileage })
+    .andWhere(minYear !== undefined ? "adverts.year >= :minYear" : "1=1", { minYear })
+    .andWhere(maxYear !== undefined ? "adverts.year <= :maxYear" : "1=1", { maxYear })
+    .andWhere(minPrice !== undefined ? "adverts.price >= :minPrice" : "1=1", { minPrice })
+    .andWhere(maxPrice !== undefined ? "adverts.price <= :maxPrice" : "1=1", { maxPrice })
+    .andWhere(minMileage !== undefined ? "adverts.mileage >= :minMileage" : "1=1", { minMileage })
+    .andWhere(maxMileage !== undefined ? "adverts.mileage <= :maxMileage" : "1=1", { maxMileage })
     .getRawOne();
 
   const mileageRange = await advertRepository.createQueryBuilder("adverts")
@@ -58,9 +63,12 @@ export const createFiltersAdvertService = async (where: TAdvertRequestUpdate): P
     .andWhere(color ? "adverts.color = :color" : "1=1", { color })
     .andWhere(fuel ? "adverts.fuel = :fuel" : "1=1", { fuel: fuel as FuelType })
     .andWhere(model ? "adverts.model = :model" : "1=1", { model })
-    .andWhere(year !== undefined ? "adverts.year = :year" : "1=1", { year })
-    .andWhere(price !== undefined ? "adverts.price <= :price" : "1=1", { price })
-    .andWhere(mileage !== undefined ? "adverts.mileage <= :mileage" : "1=1", { mileage })
+    .andWhere(minYear !== undefined ? "adverts.year >= :minYear" : "1=1", { minYear })
+    .andWhere(maxYear !== undefined ? "adverts.year <= :maxYear" : "1=1", { maxYear })
+    .andWhere(minPrice !== undefined ? "adverts.price >= :minPrice" : "1=1", { minPrice })
+    .andWhere(maxPrice !== undefined ? "adverts.price <= :maxPrice" : "1=1", { maxPrice })
+    .andWhere(minMileage !== undefined ? "adverts.mileage >= :minMileage" : "1=1", { minMileage })
+    .andWhere(maxMileage !== undefined ? "adverts.mileage <= :maxMileage" : "1=1", { maxMileage })
     .getRawOne();
 
   const [brandAdvert, modelAdvert, fuelAdvert, colorAdvert] = await Promise.all(distinctPromises);
