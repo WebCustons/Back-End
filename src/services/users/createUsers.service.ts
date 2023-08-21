@@ -14,6 +14,7 @@ export const createUserService = async (userData: TUserRequest): Promise<TUserRe
   const userRepository = AppDataSource.getRepository(Users);
 
   const newAddress = addressRepository.create(address);
+  
   await addressRepository.save(newAddress)
 
   const userType: UserType = type_user as UserType;
@@ -28,4 +29,3 @@ export const createUserService = async (userData: TUserRequest): Promise<TUserRe
 
   return userSchemaResponse.parse(newUser);
 };
-

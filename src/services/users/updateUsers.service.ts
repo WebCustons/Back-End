@@ -13,26 +13,27 @@ export const updateUserService = async (
 ): Promise<TUserResponse> => {
   const userRepository = AppDataSource.getRepository(Users)
 
-  const user = await userRepository.findOne({
+  const user = await userRepository.findOneOrFail({
     where: { id: userId },
     relations: {
       address: true,
     },
   })
 
-  if (!user) {
-    throw new Error("User not found")
-  }
-
-  console.log(user)
-
   if (userData.address) {
+
     const addressRepository = AppDataSource.getRepository(Address)
+
     const address = await addressRepository.findOneByOrFail({
       id: user.address.id,
     })
+
     const updatedAddress = Object.assign(address, userData.address)
+
     await addressRepository.save(updatedAddress)
+
+    userData.address = updatedAddress
+
   }
   const updatedUser = Object.assign(user, userData)
 

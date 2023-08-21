@@ -1,25 +1,26 @@
-import { Router } from "express"
+import { Router } from "express";
 import {
   userSchemaRequest,
   userSchemaRequestUpdate,
-} from "../schemas/user.schema"
+} from "../schemas/user.schema";
 import {
-  isOwnerOrAdminUser,
   userExistsbyId,
   userExistsCreate,
-} from "./../middlewares/users.middlewares"
-import { createUsersController } from "./../controllers/User/createUsers.controller"
-import { listOneUsersController } from "./../controllers/User/listOneUsers.controller"
-import { listAllUsersController } from "./../controllers/User/listAllUsers.controller"
-import { updateUserController } from "./../controllers/User/updateUsers.controller"
-import { deleteUserController } from "./../controllers/User/deleteUsers.controller"
-import { schemaValidator } from "../middlewares/schema.middlewares"
+  isOwnerOrAdminUser,
+} from "./../middlewares/users.middlewares";
+import { schemaValidator } from "../middlewares/schema.middlewares";
 import {
   isAdmin,
   verifyAuthToken,
-} from "../middlewares/authorization.middleware"
+} from "../middlewares/authorization.middleware";
+import { createUsersController } from "./../controllers/User/createUsers.controller";
+import { listAllUsersController } from "./../controllers/User/listAllUsers.controller";
+import { listOneUsersController } from "./../controllers/User/listOneUsers.controller";
+import { updateUserController } from "./../controllers/User/updateUsers.controller";
+import { deleteUserController } from "./../controllers/User/deleteUsers.controller";
+import { listAllUserAdvertsController } from "./../controllers/User/listAllUserAdverts.controller";
 
-export const userRoutes = Router()
+export const userRoutes = Router();
 
 userRoutes.post("/", schemaValidator(userSchemaRequest), userExistsCreate, createUsersController)
 userRoutes.get("/all", verifyAuthToken, isAdmin, listAllUsersController)
