@@ -35,7 +35,7 @@ export const createAdvertService = async (
     const imageGalleryRepository = AppDataSource.getRepository(ImageGallery);
     const imagesMap = images.map(async (item) => {
       const newImage = imageGalleryRepository.create({
-        image: item.image,
+        image: item,
         adverts: newAdvert,
       });
 

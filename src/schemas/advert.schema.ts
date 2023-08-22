@@ -32,9 +32,9 @@ export const advertSchemaRequest = advertSchema
   .omit({
     id: true,
     user: true,
-    comments: true
+    comments: true,
   })
-  .extend({ images: imageGallerySchemaRequest.array().optional()});
+  .extend({ images: z.string().array().optional() });
 
 export const advertSchemaRequestUpdate = advertSchemaRequest.partial();
 
