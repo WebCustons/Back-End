@@ -3,7 +3,7 @@ import { AppDataSource } from "../data-source";
 import { Adverts } from "../entities/adverts.entities";
 import { AppError } from './../errors';
 
-export const isOwnerOrAdminAdverts = async (req: Request, res: Response, next: NextFunction) => {
+export const isOwnerAdverts = async (req: Request, res: Response, next: NextFunction) => {
 
     const userId = Number(res.locals.userId)
     const advertsId = Number(req.params.id)
@@ -16,7 +16,7 @@ export const isOwnerOrAdminAdverts = async (req: Request, res: Response, next: N
         relations: { user: true }
     });
     
-    if ((method !== "POST" && adverts?.user.type_user === "admin") || adverts?.user.id == userId) {
+    if ((method !== "POST") && adverts?.user.id == userId) {
         return next()
     }
 
