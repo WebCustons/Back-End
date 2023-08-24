@@ -35,6 +35,13 @@ export const listfiltersAdvertsService = async (pageReq: number, perPageReq: num
   const totalPages = Math.ceil(totalCount / perPageReq);
 
   const nextAdverts = await advertRepository.find({
+    where:{
+      brand: where.brand,
+      color: where.color,   
+      fuel: where.fuel,     
+      model: where.model,   
+      year: where.year,     
+  },
     take: perPageReq,
     skip: perPageReq * pageReq,
   });
