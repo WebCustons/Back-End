@@ -19,7 +19,7 @@ export class Comments {
   @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
   created_at: Date;
 
-  @ManyToOne(() => Users, (users) => users.comments)
+  @ManyToOne(() => Users, (users) => users.comments, { onDelete: "CASCADE" })
   user: Users;
 
   @ManyToOne(() => Adverts, (adverts) => adverts.comments, { onDelete: "CASCADE" })
