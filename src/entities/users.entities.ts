@@ -7,13 +7,13 @@ import {
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
-} from "typeorm";
-import { hashSync } from "bcryptjs";
-import { Address } from "./address.entities";
-import { Adverts } from "./adverts.entities";
-import { Comments } from "./comments.entities";
-import { type } from "os";
-import { string } from "zod";
+} from "typeorm"
+import { getRounds, hashSync } from "bcryptjs"
+import { Address } from "./address.entities"
+import { Adverts } from "./adverts.entities"
+import { Comments } from "./comments.entities"
+import { type } from "os"
+import { string } from "zod"
 
 export enum UserType {
   CUSTOMER = "customer",
@@ -24,52 +24,51 @@ export enum UserType {
 @Entity()
 export class Users {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: number
 
   @Column({ type: "text", nullable: false })
-  name: string;
+  name: string
 
   @Column({ type: "text", nullable: false, unique: true })
-  email: string;
+  email: string
 
   @Column({ type: "varchar", length: 14, nullable: false, unique: true })
-  cpf: string;
+  cpf: string
 
   @Column({ type: "bigint", nullable: false })
-  phone: string;
+  phone: string
 
   @Column({ type: "date", nullable: false })
-  birth_date: Date;
+  birth_date: Date
 
   @Column({ type: "text", nullable: false })
-  description: string;
+  description: string
 
   @Column({ type: "text", nullable: false })
-  password: string;
+  password: string
 
   @Column({ type: "text", nullable: false })
-  type_user: UserType;
+  type_user: UserType
 
   @Column({ type: "varchar", nullable: true })
-  reset_token: string | null;
+  reset_token: string | null
 
   @OneToOne(() => Address)
   @JoinColumn()
-  address: Address;
+  address: Address
 
   @OneToMany(() => Adverts, (adverts) => adverts.user)
-  adverts: Adverts[];
+  adverts: Adverts[]
 
   @OneToMany(() => Comments, (comment) => comment.user)
-  comments: Comments[];
+  comments: Comments[]
 
   @BeforeInsert()
-  cryptoPassword() {
-    this.password = hashSync(this.password, 10);
-  }
-
   @BeforeUpdate()
   cryptoPasswordUpdate() {
-    this.password = hashSync(this.password, 10);
+    const isEncripted = getRounds(this.password)
+    if (!isEncripted) {
+      this.password = hashSync(this.password, 10)
+    }
   }
 }
