@@ -17,5 +17,9 @@ export const commentSchemaResponse = commentSchema.omit({
   })
 })
 
+export const commentSchemaReadAllCommentAdvert = z.array(
+  commentSchemaResponse
+)
+
 export const commentSchemaRequest = commentSchema.pick({comment:true});
 

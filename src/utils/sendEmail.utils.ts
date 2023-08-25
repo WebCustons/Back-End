@@ -15,7 +15,7 @@ class EmailService {
 
     await transporter
       .sendMail({
-        from: "bruunofernandonunes@gmail.com",
+        from: process.env.SMTP_USER,
         to,
         subject,
         html: text,
@@ -51,7 +51,7 @@ class EmailService {
           button: {
             color: "#4529E6",
             text: "Recover your password",
-            link: `http://localhost:5173/recoverPassword?${resetToken}`,
+            link: `http://localhost:5173/recoverPassword/${resetToken}`,
           },
         },
         outro:
