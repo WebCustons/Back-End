@@ -1,0 +1,1239 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Web Customs API",
+    "version": "1.0.0",
+    "description": "API Documentation for Web Customs"
+  },
+  "servers": [{ "url": "http://localhost:3000" }],
+  "paths": {
+    "/users": {
+      "post": {
+        "summary": "Register User",
+        "description": "This route register a new user",
+        "tags": ["Users"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              },
+              "example": {
+                "name": "abc",
+                "email": "abc@email.com",
+                "cpf": "713.350.009-45",
+                "phone": "1",
+                "birth_date": "1990-01-15",
+                "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                "password": "senha123",
+                "type_user": "admin",
+                "address": {
+                  "cep": "12345678",
+                  "state": "São Paulo",
+                  "city": "São Paulo",
+                  "road": "Rua A",
+                  "number": "123",
+                  "complement": "Proximo ao parque x"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "User already exists"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Body",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": {
+                      "name": ["Required"],
+                      "email": ["Required"],
+                      "cpf": ["Required"],
+                      "password": ["Required"],
+                      "birth_date": ["Required"],
+                      "description": ["Required"],
+                      "type_user": ["Required"],
+                      "address": ["Required"]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update User",
+        "description": "This route updates an user, needs authentication. Only the onwer can retrive it",
+        "tags": ["Users"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              },
+              "examples": {
+                "user": {
+                  "value": {
+                    "password": "ZaWordu",
+                    "description": "Lorem ipsum dolor sit amet 2.0"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Body",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": {
+                      "name": ["must be a string"],
+                      "email": ["must be an email"]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "User not found"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "jwt must be provided"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "Insufficient permission"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "summary": "Retrieve User",
+        "description": "This route retrieve an user, needs authentication. Only the onwer can retrive it",
+        "tags": ["Users"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "Numeric ID of the user to get"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "User not found"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "jwt must be provided"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "Insufficient permission"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete User",
+        "description": "This route deletes an user, needs authentication. Only the onwer can retrive it",
+        "tags": ["Users"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "Numeric ID of the user to get"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "User not found"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "jwt must be provided"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "Insufficient permission"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/all": {
+      "get": {
+        "summary": "List Users",
+        "description": "This route retrieve all users, needs authentication. Only for the admin.",
+        "tags": ["Users"],
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/User" }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "jwt must be provided"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "Insufficient permission"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{id}/adverts": {
+      "get": {
+        "summary": "Retrieve an user with his adverts",
+        "description": "This route retrieve an user, needs authentication. Only the onwer can retrive it",
+        "tags": ["Users"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "Numeric ID of the user to get"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/UserWithAdverts"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "User not found"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "jwt must be provided"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "Insufficient permission"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "summary": "User Login",
+        "description": "This route is used for login",
+        "tags": ["Login"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              },
+              "examples": {
+                "user": {
+                  "value": {
+                    "email": "costumer@example.com",
+                    "password": "costumer@1234"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": { "type": "string" },
+                    "user": { "$ref": "#/components/schemas/User" }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Body",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": {
+                      "email": ["Required"],
+                      "password": ["Required"]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "Invalid credentials"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/adverts": {
+      "post": {
+        "summary": "Create Advert",
+        "description": "This route is used to create an advert",
+        "security": [{ "bearerAuth": [] }],
+        "tags": ["Adverts"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdvertsRequest"
+              },
+              "examples": {
+                "advert": {
+                  "value": {
+                    "brand": "Aleatório 2",
+                    "model": "Carro chique",
+                    "year": 2023,
+                    "fuel": "hibrido",
+                    "mileage": 10000,
+                    "color": "preto",
+                    "table_fipe": false,
+                    "price": 35000,
+                    "description": "Excellent condition, low mileage.",
+                    "cover_image": "https://example.com/car-image.jpg",
+                    "published": true,
+                    "doors": 4,
+                    "images": [
+                      "base64_encoded_image_data_here",
+                      "base64_encoded_image_data_here"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "advert": { "$ref": "#/components/schemas/Advert" }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Body",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": {
+                      "email_login": ["Required"],
+                      "password": ["Required"]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "jwt must be provided"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "Invalid credentials"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "List Advert",
+        "description": "This route is used retrive an list of adverts",
+        "tags": ["Adverts"],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pagination"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/adverts/{id}": {
+      "get": {
+        "summary": "Retrieve an advert",
+        "description": "This route retrieve an advert.",
+        "tags": ["Adverts"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "Numeric ID of the advert to get"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Advert"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "Advert not found"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update an advert",
+        "description": "This route updates an advert. Only the onwer or the admin can use it",
+        "tags": ["Adverts"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "Numeric ID of the advert to get"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdvertsRequest"
+              },
+              "examples": {
+                "advert": {
+                  "value": {
+                    "brand": "Aleatório 3",
+                    "model": "Carro brega"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Advert"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Body",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": {
+                      "brand": ["Required"]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "jwt must be provided"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "Invalid credentials"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletes an advert",
+        "description": "This route deletes an advert.",
+        "security": [{ "bearerAuth": [] }],
+        "tags": ["Adverts"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "Numeric ID of the advert to get"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Advert"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "jwt must be provided"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "Invalid credentials"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "message": "Advert not found"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/adverts/adverts-filters": {
+      "get": {
+        "summary": "Retrieve an list of filters",
+        "description": "This route retrieve an list of filter options of an adverts base.",
+        "tags": ["Adverts"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "brand",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Number of the page"
+          },
+          {
+            "in": "query",
+            "name": "color",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Color of the advert"
+          },
+          {
+            "in": "query",
+            "name": "fuel",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Fuel type of the advert"
+          },
+          {
+            "in": "query",
+            "name": "model",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Model of the advert"
+          },
+          {
+            "in": "query",
+            "name": "minYear",
+            "schema": {
+              "type": "string"
+            },
+            "description": "minYear of the advert"
+          },
+          {
+            "in": "query",
+            "name": "maxYear",
+            "schema": {
+              "type": "string"
+            },
+            "description": "maxYear of the advert"
+          },
+          {
+            "in": "query",
+            "name": "minPrice",
+            "schema": {
+              "type": "string"
+            },
+            "description": "minPrice of the advert"
+          },
+          {
+            "in": "query",
+            "name": "maxPrice",
+            "schema": {
+              "type": "string"
+            },
+            "description": "maxPrice of the advert"
+          },
+          {
+            "in": "query",
+            "name": "minMileage",
+            "schema": {
+              "type": "string"
+            },
+            "description": "minMileage of the advert"
+          },
+          {
+            "in": "query",
+            "name": "maxMileage",
+            "schema": {
+              "type": "string"
+            },
+            "description": "maxMileage of the advert"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/AdvertFilters"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/adverts/filtered": {
+      "get": {
+        "summary": "List Adverts(Filters)",
+        "description": "This route retrieve an list of adverts based on a filter.",
+        "tags": ["Adverts"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Number of the page"
+          },
+          {
+            "in": "query",
+            "name": "brand",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Number of the page"
+          },
+          {
+            "in": "query",
+            "name": "color",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Color of the advert"
+          },
+          {
+            "in": "query",
+            "name": "fuel",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Fuel type of the advert"
+          },
+          {
+            "in": "query",
+            "name": "model",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Model of the advert"
+          },
+          {
+            "in": "query",
+            "name": "minYear",
+            "schema": {
+              "type": "string"
+            },
+            "description": "minYear of the advert"
+          },
+          {
+            "in": "query",
+            "name": "maxYear",
+            "schema": {
+              "type": "string"
+            },
+            "description": "maxYear of the advert"
+          },
+          {
+            "in": "query",
+            "name": "minPrice",
+            "schema": {
+              "type": "string"
+            },
+            "description": "minPrice of the advert"
+          },
+          {
+            "in": "query",
+            "name": "maxPrice",
+            "schema": {
+              "type": "string"
+            },
+            "description": "maxPrice of the advert"
+          },
+          {
+            "in": "query",
+            "name": "minMileage",
+            "schema": {
+              "type": "string"
+            },
+            "description": "minMileage of the advert"
+          },
+          {
+            "in": "query",
+            "name": "maxMileage",
+            "schema": {
+              "type": "string"
+            },
+            "description": "maxMileage of the advert"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Pagination"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "name": { "type": "string" },
+          "email": { "type": "string" },
+          "cpf": {
+            "type": "string",
+            "writeOnly": true
+          },
+          "phone": {
+            "type": "string",
+            "maxLength": 12
+          },
+          "birth_date": { "type": "string" },
+          "description": { "type": "string" },
+          "password": {
+            "type": "string",
+            "writeOnly": true
+          },
+          "type_user": {
+            "type": "string",
+            "enum": ["customer", "seller", "admin"]
+          },
+          "address": { "$ref": "#/components/schemas/Address" }
+        }
+      },
+      "Address": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "cep": { "type": "string" },
+          "state": { "type": "string" },
+          "city": { "type": "string" },
+          "road": { "type": "string" },
+          "number": { "type": "string" },
+          "complement": { "type": "string" }
+        }
+      },
+      "UserWithAdverts": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/User",
+            "type": "object",
+            "properties": {
+              "adverst": {
+                "type": "array",
+                "items": { "$ref": "#/components/schemas/AdvertsUser" }
+              }
+            }
+          }
+        ]
+      },
+      "AdvertsUser": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "brand": { "type": "string" },
+          "model": { "type": "string" },
+          "year": { "type": "integer" },
+          "fuel": {
+            "type": "string",
+            "enum": ["flex", "hibrido", "eletrico"]
+          },
+          "mileage": { "type": "integer" },
+          "color": { "type": "string" },
+          "table_fibe": { "type": "boolean" },
+          "price": { "type": "number" },
+          "description": { "type": "string" },
+          "cover_image": { "type": "string" },
+          "published": { "type": "boolean" }
+        }
+      },
+      "Login": {
+        "type": "object",
+        "properties": {
+          "email": { "type": "string" },
+          "password": { "type": "string" }
+        }
+      },
+      "LoginResponse": {
+        "type": "object",
+        "properties": {
+          "token": { "type": "string" },
+          "user": { "$ref": "#/components/schemas/User" }
+        }
+      },
+      "Advert": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AdvertsUser",
+            "type": "object",
+            "properties": {
+              "user": { "$ref": "#/components/schemas/User" },
+              "images": {
+                "type": "array",
+                "items": { "$ref": "#/components/schemas/Image" }
+              },
+              "comments": {
+                "type": "array",
+                "items": { "$ref": "#/components/schemas/Comment" }
+              }
+            }
+          }
+        ]
+      },
+      "AdvertsRequest": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AdvertsUser",
+            "type": "object",
+            "properties": {
+              "images": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            }
+          }
+        ]
+      },
+      "AdvertFilters": {
+        "type": "object",
+        "properties": {
+          "brandAdvert": { "type": "array", "items": { "type": "string" } },
+          "modelAdvert": { "type": "array", "items": { "type": "string" } },
+          "fuelAdvert": { "type": "array", "items": { "type": "string" } },
+          "colorAdvert": { "type": "array", "items": { "type": "string" } },
+          "minYear": { "type": "integer" },
+          "maxYear": { "type": "integer" },
+          "minPrice": { "type": "integer" },
+          "maxPrice": { "type": "integer" },
+          "minMileage": { "type": "integer" },
+          "maxMileage": { "type": "integer" }
+        }
+      },
+      "Pagination": {
+        "type": "object",
+        "properties": {
+          "prevPage": { "type": "string" },
+          "nextPage": { "type": "string" },
+          "totalPages": { "type": "integer" },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Advert"
+            }
+          }
+        }
+      },
+      "Image": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "image": { "type": "string" },
+          "advert": { "$ref": "#/components/schemas/AdvertsUser" }
+        }
+      },
+      "ImageResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "image": { "type": "string" },
+          "advert": { "$ref": "#/components/schemas/AdvertsUser" }
+        }
+      },
+      "Comment": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "comment": { "type": "string" },
+          "created_at": {
+            "type": "string",
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
