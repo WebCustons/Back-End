@@ -10,6 +10,7 @@ import {
 } from "./../middlewares/users.middlewares";
 import { schemaValidator } from "../middlewares/schema.middlewares";
 import {
+  adminCantUseRoute,
   isAdmin,
   verifyAuthToken,
 } from "../middlewares/authorization.middleware";
@@ -39,6 +40,7 @@ userRoutes.get(
 userRoutes.patch(
   "/",
   verifyAuthToken,
+  adminCantUseRoute,
   userExistsbyId,
   schemaValidator(userSchemaRequestUpdate),
   userExistsCreate,

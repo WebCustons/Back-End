@@ -47,19 +47,17 @@ export const isAdmin = async (
 }
 
 
-export const notIsAdmin = async(req: Request,res: Response,next: NextFunction)=>{
+export const adminCantUseRoute = async (req:Request,res:Response,next:NextFunction) => {
+    const userId = Number(res.locals.userId)
+    const userRepo = AppDataSource.getRepository(Users)
 
-    const userId = res.locals.userId
-    
-    const repository = AppDataSource.getRepository(Users)
-    
-    const user = await repository.findOne({
-        where: { id: userId }
-    });
-
-    if (user?.type_user == 'admin') {
-        throw new AppError(`Admins cannot access this route`, 401)
+    const user = await userRepo.findOne({
+        where: {
+            id: userId
+        }
+    })
+    if(user?.type_user == "admin"){
+        throw new AppError("Admins can't use this route", 409)
     }
-
     return next()
 }

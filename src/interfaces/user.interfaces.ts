@@ -7,6 +7,13 @@ import {
   userSchemaResponse,
 } from "../schemas/user.schema"
 
+
+export type IEmailRequest = {
+  to: string,
+  subject: string,
+  text: string
+}
+
 export type TUser = z.infer<typeof userSchema>
 
 export type TUserRequest = z.infer<typeof userSchemaRequest>
