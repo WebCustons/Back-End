@@ -19,6 +19,6 @@ commentsRoutes.post(
   schemaValidator(commentSchemaRequest),
   createCommentController
 );
-commentsRoutes.get("/advert/:id",verifyAuthToken,advertsExistsbyId,readAllCommentAdvertController);
+commentsRoutes.get("/advert/:id",advertsExistsbyId,readAllCommentAdvertController);
 commentsRoutes.patch("/:id",verifyAuthToken,adminCantUseRoute,commentExistsbyId,isOwnerComments,schemaValidator(commentSchemaRequest),updateCommentController);
 commentsRoutes.delete("/:id", verifyAuthToken,commentExistsbyId,isOwnerComments,deleteCommentController);

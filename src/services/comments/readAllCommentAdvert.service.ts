@@ -3,6 +3,8 @@ import {AppDataSource} from '../../data-source';
 
 export const readAllCommentAdvertService = async(idAdvert:number)=>{
 
+    console.log('aqui')
+
     const repAdvert = AppDataSource.getRepository(Adverts);
 
     const advert = await repAdvert.find({
@@ -10,9 +12,13 @@ export const readAllCommentAdvertService = async(idAdvert:number)=>{
             id:idAdvert
         },
         relations:{
-            comments:true
+            comments:{
+                user:true
+            }
+            
         }
         
     })
+
     return advert[0].comments
 }
