@@ -45,9 +45,9 @@ class EmailService {
       body: {
         name: userName,
         intro:
-          "You have received this email because a password reset request for your account was received.",
+          "Você recebeu este e-mail porque foi recebida uma solicitação de redefinição de senha da sua conta.",
         action: {
-          instructions: "Click the button below to reset your password:",
+          instructions: "Clique no botão abaixo para redefinir sua senha:",
           button: {
             color: "#4529E6",
             text: "Recover your password",
@@ -55,7 +55,7 @@ class EmailService {
           },
         },
         outro:
-          "If you did not request a password reset, no further action is required on your part.",
+          "Se você não solicitou uma redefinição de senha, nenhuma ação adicional será necessária de sua parte.",
       },
     };
 
