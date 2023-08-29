@@ -1,5 +1,5 @@
 import { Repository } from "typeorm";
-import { TUser, TUserAdverts } from "../../interfaces/user.interfaces";
+import {TUserAdverts } from "../../interfaces/user.interfaces";
 import { AppDataSource } from "../../data-source";
 import { Users } from "../../entities/users.entities";
 import { userAdvertsSchema } from "../../schemas/user.schema";

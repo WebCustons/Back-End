@@ -2,7 +2,7 @@ import { AppDataSource } from "../../data-source";
 import { Adverts } from "../../entities/adverts.entities";
 import { Repository } from 'typeorm';
 import { IPagination } from "../../interfaces/pagina.interface";
-import { advertSchemaResponse, allAdvertSchema } from './../../schemas/advert.schema';
+import {allAdvertSchema } from './../../schemas/advert.schema';
 
 export const listAdvertService = async (
   pageReq: number,

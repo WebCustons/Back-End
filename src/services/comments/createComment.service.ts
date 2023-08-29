@@ -1,6 +1,5 @@
 import {Comments} from '../../entities/comments.entities';
 import {AppDataSource} from '../../data-source';
-import {TComment} from '../../interfaces/comment.interfaces';
 import { Users } from '../../entities/users.entities';
 import { Repository } from 'typeorm';
 import { commentSchemaResponse } from '../../schemas/comment.schema';

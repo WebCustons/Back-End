@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { sendResetEmailPassword } from "../../services/users/sendEmailResetPassword.service";
 import { resetPassword } from "../../services/users/resetPassword.service";
 
 export const resetPasswordController = async (req: Request, res: Response) => {
