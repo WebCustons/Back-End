@@ -2,11 +2,9 @@ import { z } from "zod";
 import { FuelType } from "../entities/adverts.entities";
 import {
   imageGallerySchemaAdvert,
-  imageGallerySchemaRequest,
 } from "./imageGallery.schema";
 import { userSchema } from "./user.schema";
 import {
-  commentSchema,
   commentSchemaResponse,
 } from "../schemas/comment.schema";
 
