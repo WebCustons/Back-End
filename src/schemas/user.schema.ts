@@ -1,8 +1,5 @@
 import { z } from "zod";
-import { advertSchema, advertSchemaResponse } from "./advert.schema";
-import { commentSchemaRequest } from "./comment.schema";
 import { FuelType } from "../entities/adverts.entities";
-import { imageGallerySchemaAdvert } from "./imageGallery.schema";
 
 const addressSchema = z.object({
   id: z.number(),
