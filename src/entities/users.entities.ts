@@ -12,8 +12,6 @@ import { getRounds, hashSync } from "bcryptjs"
 import { Address } from "./address.entities"
 import { Adverts } from "./adverts.entities"
 import { Comments } from "./comments.entities"
-import { type } from "os"
-import { string } from "zod"
 
 export enum UserType {
   CUSTOMER = "customer",

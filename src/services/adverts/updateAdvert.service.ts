@@ -3,7 +3,6 @@ import { Adverts } from "../../entities/adverts.entities";
 import { AppError } from "../../errors";
 import { TAdvertRequestUpdate, TAdvertResponse } from "../../interfaces/advert.interfaces";
 import { advertSchemaResponse } from "./../../schemas/advert.schema";
-import { Users } from "../../entities/users.entities";
 import { DeepPartial } from "typeorm";
 
 export const updateAdvertService = async (
@@ -12,7 +11,6 @@ export const updateAdvertService = async (
   advertData: TAdvertRequestUpdate
 ): Promise<TAdvertResponse> => {
 
-  const userRepository = AppDataSource.getRepository(Users);
   const advertRepository = AppDataSource.getRepository(Adverts);
 
   const oldDataAdvert = await advertRepository.findOne({

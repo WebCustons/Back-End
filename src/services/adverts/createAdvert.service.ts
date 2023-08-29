@@ -4,7 +4,6 @@ import { Adverts } from "../../entities/adverts.entities";
 import { TAdvertRequest } from "../../interfaces/advert.interfaces";
 import { advertSchemaResponse } from "./../../schemas/advert.schema";
 import { ImageGallery } from "../../entities/imageGallery.entities";
-import { TImageGalleryResponse } from "../../interfaces/imageGallery.interfaces";
 import { imageGallerySchema } from "../../schemas/imageGallery.schema";
 
 export const createAdvertService = async (
