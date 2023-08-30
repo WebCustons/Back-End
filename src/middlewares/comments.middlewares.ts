@@ -28,7 +28,11 @@ export const isOwnerComments = async (
         throw new AppError(`This does not belong to you`, 401);
     }
 
-  } else {
+  } else if(user?.type_user === 'admin') {
+    return next()
+    
+  }else{
+
     if (comment?.user.id == userId) {
       return next();
     }
