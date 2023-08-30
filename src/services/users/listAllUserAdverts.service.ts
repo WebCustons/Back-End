@@ -16,6 +16,5 @@ export const listAllUserAdvertsService = async (
       adverts: true,
     },
   });
-
   return userAdvertsSchema.parse(userAdverts);
 };

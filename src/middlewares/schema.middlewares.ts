@@ -9,8 +9,10 @@ export const schemaValidator = (schema: ZodSchema) => (req: Request, res: Respon
     const validateData = schema.parse(req.body)
     
 
+
     req.body = validateData
 
+    
     return next()
 
 }

@@ -53,7 +53,7 @@ const advertsEssentials = z.object({
   model: z.string(),
   year: z.number().int().positive(),
   fuel: z.enum([FuelType.FLEX, FuelType.HIBRIDO, FuelType.ELETRICO]),
-  mileage: z.number().int().positive(),
+  mileage: z.number().int(),
   color: z.string(),
   table_fipe: z.boolean(),
   price: z.number().positive(),

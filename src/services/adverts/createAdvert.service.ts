@@ -46,6 +46,9 @@ export const createAdvertService = async (
   }
 
   newAdvert.images = newImages;
+
   await advertRepository.save(newAdvert);
+
+
   return advertSchemaResponse.parse(newAdvert);
 };
