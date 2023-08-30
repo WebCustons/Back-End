@@ -24,9 +24,16 @@ export const isOwnerComments = async (
   if (req.method == "PATCH") {
     if (comment?.user.id == userId) {
       return next();
+    }else{
+        throw new AppError(`This does not belong to you`, 401);
     }
-  } else {
-    if (user!.id == userId) {
+
+  } else if(user?.type_user === 'admin') {
+    return next()
+    
+  }else{
+
+    if (comment?.user.id == userId) {
       return next();
     }
 
