@@ -37,3 +37,4 @@ app.use("/comments", commentsRoutes);
 app.use(handleAppError);
 
 export default app;
+
