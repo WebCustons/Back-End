@@ -1,9 +1,8 @@
 import {Adverts} from '../../entities/adverts.entities';
 import {AppDataSource} from '../../data-source';
 
-export const readAllCommentAdvertService = async(idAdvert:number)=>{
+export const readAllCommentsAdvertService = async(idAdvert:number)=>{
 
-    console.log('aqui')
 
     const repAdvert = AppDataSource.getRepository(Adverts);
 

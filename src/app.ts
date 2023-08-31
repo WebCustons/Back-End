@@ -1,15 +1,15 @@
-import "express-async-errors";;
-import express from "express";;
-import swaggerJSDoc from "swagger-jsdoc";;
-import swaggerUi from "swagger-ui-express";;
+import "express-async-errors";
+import express from "express";
+import swaggerJSDoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
 import cors from "cors";;
-import { handleAppError } from "./errors";;
-import { userRoutes } from "./routes/users.routes";;
-import { advertsRoutes } from "./routes/adverts.routes";;
-import { imageGalleryRoutes } from "./routes/imageGallery.routes";;
-import { commentsRoutes } from "./routes/comments.routes";;
+import { handleAppError } from "./errors";
+import { userRoutes } from "./routes/users.routes";
+import { advertsRoutes } from "./routes/adverts.routes";
+import { imageGalleryRoutes } from "./routes/imageGallery.routes";
+import { commentsRoutes } from "./routes/comments.routes";
 import { loginRoutes } from "./routes/login.routes";
-import { sendRoutes } from "./routes/sendEmailPassword.routes";;
+import { sendRoutes } from "./routes/sendEmailPassword.routes";
 import swaggerDocument from "./swagger.json";
 
 const app = express();
@@ -37,3 +37,4 @@ app.use("/comments", commentsRoutes);
 app.use(handleAppError);
 
 export default app;
+

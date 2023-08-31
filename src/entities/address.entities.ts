@@ -1,10 +1,8 @@
 import {
   Column,
   Entity,
-  OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { Users } from "./users.entities";
 
 @Entity()
 export class Address {

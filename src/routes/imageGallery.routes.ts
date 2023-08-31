@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { ImageGallery } from "../entities/imageGallery.entities";
 import { verifyAuthToken } from "../middlewares/authorization.middleware";
 import { schemaValidator } from "../middlewares/schema.middlewares";
 import { imageGallerySchemaRequest } from "../schemas/imageGallery.schema";

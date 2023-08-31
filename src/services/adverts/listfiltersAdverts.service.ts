@@ -1,4 +1,3 @@
-import { MoreThanOrEqual, LessThanOrEqual } from "typeorm";
 import { AppDataSource } from "../../data-source";
 import { Adverts, FuelType } from "../../entities/adverts.entities";
 import { allAdvertSchema } from "../../schemas/advert.schema";

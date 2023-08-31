@@ -1,4 +1,3 @@
-import { TComment } from "../../interfaces/comment.interfaces";
 import { createCommentsService } from "../../services/comments/createComment.service";
 import {Request, Response} from 'express';
 

@@ -1,4 +1,4 @@
-import { string, z } from "zod"
+import { z } from "zod"
 import { userSchema } from "./user.schema"
 
 export const commentSchema = z.object({
