@@ -15,8 +15,8 @@ export const isOwnerAdverts = async (req: Request, res: Response, next: NextFunc
         where: { id: advertsId },
         relations: { user: true }
     });
-    
-    if ((method !== "POST") && adverts?.user.id == userId) {
+
+    if (adverts?.user.id == userId) {
         return next()
     }
 
