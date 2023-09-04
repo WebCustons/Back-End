@@ -1,6 +1,8 @@
 import {Request,Response} from 'express';
 import {readAllCommentsAdvertService} from '../../services/comments/readAllCommentAdvert.service';
 import { commentSchemaReadAllCommentAdvert} from '../../schemas/comment.schema';
+import {readAllCommentAdvertService} from '../../services/comments/readAllCommentAdvert.service';
+
 
 
 export const readAllCommentAdvertController = async(req:Request, res:Response)=>{
@@ -9,5 +11,6 @@ export const readAllCommentAdvertController = async(req:Request, res:Response)=>
     const verify = commentSchemaReadAllCommentAdvert.parse(result);
 
     return res.status(200).json(verify);
+
 
 }
