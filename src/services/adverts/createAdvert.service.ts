@@ -4,7 +4,6 @@ import { Adverts } from "../../entities/adverts.entities";
 import { TAdvertRequest } from "../../interfaces/advert.interfaces";
 import { advertSchemaResponse } from "./../../schemas/advert.schema";
 import { ImageGallery } from "../../entities/imageGallery.entities";
-import { TImageGalleryResponse } from "../../interfaces/imageGallery.interfaces";
 import { imageGallerySchema } from "../../schemas/imageGallery.schema";
 
 export const createAdvertService = async (
@@ -35,7 +34,7 @@ export const createAdvertService = async (
     const imageGalleryRepository = AppDataSource.getRepository(ImageGallery);
     const imagesMap = images.map(async (item) => {
       const newImage = imageGalleryRepository.create({
-        image: item.image,
+        image: item,
         adverts: newAdvert,
       });
 
@@ -47,6 +46,9 @@ export const createAdvertService = async (
   }
 
   newAdvert.images = newImages;
+
   await advertRepository.save(newAdvert);
+
+
   return advertSchemaResponse.parse(newAdvert);
 };

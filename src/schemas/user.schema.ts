@@ -1,8 +1,5 @@
 import { z } from "zod";
-import { advertSchema, advertSchemaResponse } from "./advert.schema";
-import { commentSchemaRequest } from "./comment.schema";
 import { FuelType } from "../entities/adverts.entities";
-import { imageGallerySchemaAdvert } from "./imageGallery.schema";
 
 const addressSchema = z.object({
   id: z.number(),
@@ -56,7 +53,7 @@ const advertsEssentials = z.object({
   model: z.string(),
   year: z.number().int().positive(),
   fuel: z.enum([FuelType.FLEX, FuelType.HIBRIDO, FuelType.ELETRICO]),
-  mileage: z.number().int().positive(),
+  mileage: z.number().int(),
   color: z.string(),
   table_fipe: z.boolean(),
   price: z.number().positive(),

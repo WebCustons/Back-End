@@ -1,7 +1,8 @@
 import {Adverts} from '../../entities/adverts.entities';
 import {AppDataSource} from '../../data-source';
 
-export const readAllCommentAdvertService = async(idAdvert:number)=>{
+export const readAllCommentsAdvertService = async(idAdvert:number)=>{
+
 
     const repAdvert = AppDataSource.getRepository(Adverts);
 
@@ -10,9 +11,13 @@ export const readAllCommentAdvertService = async(idAdvert:number)=>{
             id:idAdvert
         },
         relations:{
-            comments:true
+            comments:{
+                user:true
+            }
+            
         }
         
     })
+
     return advert[0].comments
 }

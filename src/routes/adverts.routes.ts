@@ -11,10 +11,10 @@ import {
 import { filteredAdvertsController } from "./../controllers/adverts/listfiltersAdverts.controller";
 import { updateAdvertsController } from "../controllers/adverts/updateAdverts.controller";
 import { createFiltersAdvertController } from "./../controllers/adverts/createFiltesAdvert.controller ";
-import { verifyAuthToken } from "../middlewares/authorization.middleware";
+import { adminCantUseRoute, verifyAuthToken } from "../middlewares/authorization.middleware";
 import {
   advertsExistsbyId,
-  isOwnerOrAdminAdverts,
+  isOwnerAdverts,
 } from "../middlewares/adverts.middlewares";
 
 export const advertsRoutes = Router();
@@ -30,6 +30,7 @@ advertsRoutes.get("/:id", advertsExistsbyId, listOneAdvertsController);
 advertsRoutes.post(
   "/",
   verifyAuthToken,
+  adminCantUseRoute,
   schemaValidator(advertSchemaRequest),
   createAdvertsController
 );
@@ -37,8 +38,9 @@ advertsRoutes.post(
 advertsRoutes.patch(
   "/:id",
   verifyAuthToken,
+  adminCantUseRoute,
   advertsExistsbyId,
-  isOwnerOrAdminAdverts,
+  isOwnerAdverts,
   schemaValidator(advertSchemaRequestUpdate),
   updateAdvertsController
 );
@@ -47,6 +49,6 @@ advertsRoutes.delete(
   "/:id",
   verifyAuthToken,
   advertsExistsbyId,
-  isOwnerOrAdminAdverts,
+  isOwnerAdverts,
   deleteAdvertsController
 );

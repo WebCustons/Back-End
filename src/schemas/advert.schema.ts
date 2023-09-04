@@ -2,11 +2,9 @@ import { z } from "zod";
 import { FuelType } from "../entities/adverts.entities";
 import {
   imageGallerySchemaAdvert,
-  imageGallerySchemaRequest,
 } from "./imageGallery.schema";
 import { userSchema } from "./user.schema";
 import {
-  commentSchema,
   commentSchemaResponse,
 } from "../schemas/comment.schema";
 
@@ -16,7 +14,7 @@ export const advertSchema = z.object({
   model: z.string(),
   year: z.number().int().positive(),
   fuel: z.enum([FuelType.FLEX, FuelType.HIBRIDO, FuelType.ELETRICO]),
-  mileage: z.number().int().positive(),
+  mileage: z.number().int(),
   color: z.string(),
   table_fipe: z.boolean(),
   price: z.number().positive(),
@@ -32,9 +30,9 @@ export const advertSchemaRequest = advertSchema
   .omit({
     id: true,
     user: true,
-    comments: true
+    comments: true,
   })
-  .extend({ images: imageGallerySchemaRequest.array().optional()});
+  .extend({ images: z.string().array().optional() });
 
 export const advertSchemaRequestUpdate = advertSchemaRequest.partial();
 

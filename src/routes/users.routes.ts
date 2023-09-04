@@ -10,6 +10,7 @@ import {
 } from "./../middlewares/users.middlewares";
 import { schemaValidator } from "../middlewares/schema.middlewares";
 import {
+  adminCantUseRoute,
   isAdmin,
   verifyAuthToken,
 } from "../middlewares/authorization.middleware";
@@ -22,8 +23,34 @@ import { listAllUserAdvertsController } from "./../controllers/User/listAllUserA
 
 export const userRoutes = Router();
 
-userRoutes.post("/", schemaValidator(userSchemaRequest), userExistsCreate, createUsersController)
-userRoutes.get("/all", verifyAuthToken, isAdmin, listAllUsersController)
-userRoutes.get("/:id", verifyAuthToken, userExistsbyId, isOwnerOrAdminUser, listOneUsersController)
-userRoutes.patch("/", verifyAuthToken, userExistsbyId, schemaValidator(userSchemaRequestUpdate), userExistsCreate, updateUserController)
-userRoutes.delete("/:id", verifyAuthToken, userExistsbyId, isOwnerOrAdminUser, deleteUserController)
+userRoutes.post(
+  "/",
+  schemaValidator(userSchemaRequest),
+  userExistsCreate,
+  createUsersController
+);
+userRoutes.get("/all", verifyAuthToken, isAdmin, listAllUsersController);
+userRoutes.get(
+  "/:id",
+  verifyAuthToken,
+  userExistsbyId,
+  isOwnerOrAdminUser,
+  listOneUsersController
+);
+userRoutes.patch(
+  "/",
+  verifyAuthToken,
+  adminCantUseRoute,
+  userExistsbyId,
+  schemaValidator(userSchemaRequestUpdate),
+  userExistsCreate,
+  updateUserController
+);
+userRoutes.delete(
+  "/:id",
+  verifyAuthToken,
+  userExistsbyId,
+  isOwnerOrAdminUser,
+  deleteUserController
+);
+userRoutes.get("/:id/adverts", userExistsbyId, listAllUserAdvertsController);

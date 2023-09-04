@@ -1,4 +1,4 @@
-import { string, z } from "zod"
+import { z } from "zod"
 import { userSchema } from "./user.schema"
 
 export const commentSchema = z.object({
@@ -16,6 +16,10 @@ export const commentSchemaResponse = commentSchema.omit({
     name:true
   })
 })
+
+export const commentSchemaReadAllCommentAdvert = z.array(
+  commentSchemaResponse
+)
 
 export const commentSchemaRequest = commentSchema.pick({comment:true});
 
