@@ -9,6 +9,8 @@
     "typeorm": "typeorm-ts-node-commonjs",
     "makeMigrations": "typeorm-ts-node-commonjs migration:generate -- -d ./src/data-source.ts ./src/migrations/",
     "migrate": "typeorm-ts-node-commonjs migration:run -- -d src/data-source"
+    "build": "tsc",
+    "start": "node dist/server.js"
   },
   "keywords": [],
   "author": "",
