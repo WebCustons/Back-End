@@ -14,6 +14,9 @@ export class CreateDatabase1693871036275 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE "users" ADD CONSTRAINT "FK_bafb08f60d7857f4670c172a6ea" FOREIGN KEY ("addressId") REFERENCES "address"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "comments" ADD CONSTRAINT "FK_7e8d7c49f218ebb14314fdb3749" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "comments" ADD CONSTRAINT "FK_c870c44a72a624e88130b663fc2" FOREIGN KEY ("advertId") REFERENCES "adverts"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
+        await queryRunner.query(`INSERT INTO "users"(name, email, cpf, phone, birth_date, description, password, type_user, reset_token)
+VALUES ('Admin', 'Admin@example.com', '12345678901', '1234567890', '1990-01-01', 'Usuario e utilizado para administar para adiministrador', 'Admin', 'Admin', NULL);
+          `);
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
