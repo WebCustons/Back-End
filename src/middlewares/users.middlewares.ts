@@ -6,26 +6,26 @@ import { AppError } from "../errors"
 export const userExistsCreate = async (req: Request, res: Response, next: NextFunction) => {
   const { email, cpf } = req.body;
 
-  const id = req.params.id ? parseInt(req.params.id) : res.locals.userId
 
   const userRepository = AppDataSource.getRepository(Users);
 
-  const existingUser = await userRepository.findOne({
-    where: [{ email }, { cpf }, { id }],
-  });
 
-  if (existingUser) {
-    if (existingUser.email === email) {
-      throw new AppError("This email already exists", 409);
-    }
-    if (existingUser.cpf === cpf) {
-      throw new AppError("This cpf already exists", 409);
-    }
-    if (!existingUser) {
-      throw new AppError("This user is not exists", 409);
-    }
+  if(email || cpf){
+    const existingUser = await userRepository.findOne({
+      where: [{ email }, { cpf }],
+    });
+    
+      if (existingUser) {
+        if (existingUser.email === email) {
+          console.log('aqui')
+          throw new AppError("This email already exists", 409);
+        }
+        if (existingUser.cpf === cpf) {
+          throw new AppError("This cpf already exists", 409);
+        }
+      }
   }
-
+  
   return next();
 };
 

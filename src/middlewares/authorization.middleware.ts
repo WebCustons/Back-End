@@ -46,7 +46,6 @@ export const isAdmin = async (
     return next()
 }
 
-
 export const adminCantUseRoute = async (req:Request,res:Response,next:NextFunction) => {
     const userId = Number(res.locals.userId)
     const userRepo = AppDataSource.getRepository(Users)
@@ -59,5 +58,6 @@ export const adminCantUseRoute = async (req:Request,res:Response,next:NextFuncti
     if(user?.type_user == "admin"){
         throw new AppError("Admins can't use this route", 409)
     }
+
     return next()
 }
