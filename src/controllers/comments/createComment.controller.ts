@@ -1,10 +1,10 @@
-import { TComment, TCommentResponse } from "../../interfaces/comment.interfaces";
+import { TCommentResponse } from "../../interfaces/comment.interfaces";
 import { createCommentsService } from "../../services/comments/createComment.service";
-import {Request, Response} from 'express';
+import { Request, Response } from 'express';
 
-export const createCommentController =  async (req: Request, res: Response) => {
+export const createCommentController = async (req: Request, res: Response) => {
 
-    const result:TCommentResponse  = await createCommentsService(res.locals.userId,Number(req.params.id),req.body.comment);
+    const result: TCommentResponse = await createCommentsService(res.locals.userId, Number(req.params.id), req.body.comment);
 
     return res.json(result).status(201);
 }
