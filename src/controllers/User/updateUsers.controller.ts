@@ -9,7 +9,6 @@ export const updateUserController = async (
     
     const User: TUserRequest = req.body;
 
-    console.log('aquuiiiiiiiiiiiiiiiiiiiiiii');
     const updateUser: TUserResponse = await updateUserService(Number(res.locals.userId), User);
 
     return res.json(updateUser);

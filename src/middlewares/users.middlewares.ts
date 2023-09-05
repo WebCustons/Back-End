@@ -17,7 +17,7 @@ export const userExistsCreate = async (req: Request, res: Response, next: NextFu
     
       if (existingUser) {
         if (existingUser.email === email) {
-          console.log('aqui')
+     
           throw new AppError("This email already exists", 409);
         }
         if (existingUser.cpf === cpf) {
