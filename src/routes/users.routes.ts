@@ -40,6 +40,7 @@ userRoutes.get(
 userRoutes.patch(
   "/",
   verifyAuthToken,
+  adminCantUseRoute,
   userExistsbyId,
   schemaValidator(userSchemaRequestUpdate),
   userExistsCreate,

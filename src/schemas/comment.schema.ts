@@ -17,7 +17,6 @@ export const commentSchemaResponse = commentSchema.omit({
   })
 })
 
-
 export const commentSchemaReadAllCommentAdvert = z.array(
   commentSchemaResponse
 )

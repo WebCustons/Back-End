@@ -21,8 +21,9 @@ export const isOwnerAdverts = async (req: Request, res: Response, next: NextFunc
         relations: { user: true }
     });
 
-    
+
     if ((method !== "POST") && adverts?.user.id == userId || verifyUser?.type_user == 'admin') {
+
         return next()
 
     }
