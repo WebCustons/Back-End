@@ -1,5 +1,6 @@
-import { z } from "zod";
-import { FuelType } from "../entities/adverts.entities";
+import { z } from "zod"
+import { FuelType } from "../entities/adverts.entities"
+import { imageGallerySchemaAdvert } from "./imageGallery.schema"
 
 const addressSchema = z.object({
   id: z.number(),
@@ -10,7 +11,7 @@ const addressSchema = z.object({
   number: z.string(),
   complement: z.string(),
   user: z.number(),
-});
+})
 
 export const userSchema = z.object({
   id: z.number(),
@@ -27,25 +28,25 @@ export const userSchema = z.object({
   password: z.string(),
   type_user: z.enum(["customer", "seller", "admin"]),
   address: addressSchema,
-});
+})
 
 export const userSchemaRequest = userSchema.omit({ id: true }).extend({
   address: addressSchema.omit({ id: true, user: true }),
-});
+})
 
 export const userSchemaResponse = userSchema
   .omit({ password: true, cpf: true })
   .extend({
     address: addressSchema.omit({ user: true }),
-  });
+  })
 
 export const userSchemaRequestUpdate = userSchemaRequest
   .extend({
     address: addressSchema.omit({ id: true, user: true }).partial(),
   })
-  .partial();
+  .partial()
 
-export const allUsersSchema = userSchemaResponse.array();
+export const allUsersSchema = userSchemaResponse.array()
 
 const advertsEssentials = z.object({
   id: z.number(),
@@ -60,8 +61,9 @@ const advertsEssentials = z.object({
   description: z.string(),
   cover_image: z.string(),
   published: z.boolean(),
-});
+  images: z.array(imageGallerySchemaAdvert),
+})
 
 export const userAdvertsSchema = userSchema
   .omit({ address: true, password: true })
-  .extend({ adverts: advertsEssentials.array() });
+  .extend({ adverts: advertsEssentials.array() })

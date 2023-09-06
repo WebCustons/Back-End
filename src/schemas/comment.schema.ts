@@ -9,17 +9,17 @@ export const commentSchema = z.object({
   created_at: z.date(),
 })
 
-export const commentSchemaResponse = commentSchema.omit({
-  advert:true
-}).extend({
-  user:userSchema.pick({
-    name:true
+export const commentSchemaResponse = commentSchema
+  .omit({
+    advert: true,
   })
-})
+  .extend({
+    user: userSchema.pick({
+      id: true,
+      name: true,
+    }),
+  })
 
-export const commentSchemaReadAllCommentAdvert = z.array(
-  commentSchemaResponse
-)
+export const commentSchemaReadAllCommentAdvert = z.array(commentSchemaResponse)
 
-export const commentSchemaRequest = commentSchema.pick({comment:true});
-
+export const commentSchemaRequest = commentSchema.pick({ comment: true })
